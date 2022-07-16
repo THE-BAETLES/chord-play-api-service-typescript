@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { firebaseAuthProvider } from './firbase-auth-provider';
+import { firebaseAuthProvider } from './firebase-auth.providers';
+import { FirebaseAuthService } from './firebase-auth.service';
 @Module({
-    providers: [...firebaseAuthProvider],
+    providers: [...firebaseAuthProvider, FirebaseAuthService],
     exports: [...firebaseAuthProvider]
 })
 export class FirebaseAuthModule {}

@@ -1,10 +1,19 @@
-import { Injectable } from '@nestjs/common';
-import { initializeApp } from 'firebase-admin';
-import { applicationDefault, getApp } from 'firebase-admin/app';
-
-const app = initializeApp({
-    credential: applicationDefault()
-})
+import { Inject, Injectable } from '@nestjs/common';
+import { Auth } from 'firebase-admin/lib/auth/auth';
+import { VerifyException } from 'src/exception/verify.exception';
 
 @Injectable()
-export class FirebaseAuthService {}
+export class FirebaseAuthService {
+    constructor(@Inject('FIREBASE_AUTH') private firebaseAuth: Auth){
+    }
+    
+    async verifyId(accessIdToken: string): Promise<string> {
+        try {
+            const uid = await (await this.firebaseAuth.verifyIdToken(accessIdToken)).uid;
+            return uid
+        }catch(error) {
+            throw new VerifyException(error.message, "AccessIdToken")
+        }
+    }
+}
+
