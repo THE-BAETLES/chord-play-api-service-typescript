@@ -1,4 +1,9 @@
+import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-
-@Module({})
+import { RecommendationService } from './recommendation.service';
+@Module({
+    imports: [HttpModule],
+    providers: [RecommendationService],
+    exports: [RecommendationService]
+})
 export class RecommendationModule {}

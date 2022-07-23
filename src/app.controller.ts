@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import { PostSignUpResponse } from './types/api/response/PostSignUp.response';
 
@@ -15,7 +15,7 @@ export class AppController {
   }
 
   @Get('recommendation')
-  async recommendation(): Promise<any> {
+  async recommendation(@Param('user_id') user_id: string, @Query('number') number: string): Promise<any> {
     
   }
 
