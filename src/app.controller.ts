@@ -14,6 +14,11 @@ export class AppController {
     }
   }
 
+  @Get('recommendation')
+  async recommendation(): Promise<any> {
+    
+  }
+
   @Get()
   async getHello(): Promise<string> {
     return await this.appService.getHello();
