@@ -18,8 +18,13 @@ export class ApiController {
     }
   }
 
+  @Get('watch-history:user_id')
+  async watchHistory(@Param('user_id') user_id: string, @Query('offset') offset: number, @Query('limit') limit: number) {
+
+  }
+
   @Get('recommendation:user_id')
-  async recommendation(@Param('user_id') user_id: string, @Query('number') number: number): Promise<any> {
+  async recommendation(@Param('user_id') user_id: string, @Query('number') number: number, @Query('offset') offset: number, @Query('limit') limit: number): Promise<any> {
     const recommendationRequest: GetRecommendationRequest = {
       params: {
         user_id: user_id
