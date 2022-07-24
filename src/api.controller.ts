@@ -1,10 +1,14 @@
 import { Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { HistoryService } from './domain/history/history.service';
+import { RecommendationService } from './domain/recommendation/recommendation.service';
 import { GetRecommendationRequest } from './types/api/request/GetRecommendation.request';
 import { PostSignUpResponse } from './types/api/response/PostSignUp.response';
 
 @Controller('v1')
 export class ApiController {
-  constructor() {}
+  constructor(private recommendationService: RecommendationService,
+     private historyService: HistoryService,
+     private progressRedisService) {}
 
   @Post('signup')
   async signUp(): Promise<PostSignUpResponse>{
@@ -24,6 +28,8 @@ export class ApiController {
         user_id: user_id
       }
     }
+    const recommendationResults = await this.recommendationService.getRecommendation(recommendationRequest);
+    return recommendationResults;
   }
 
 }

@@ -2,6 +2,7 @@ import * as mongoose from "mongoose"
 import { ConfigService } from "@nestjs/config"
 import { Logger } from "@nestjs/common"
 import { MongoConfigType } from "src/configs/mongo.config";
+import { Connection } from "mongoose";
 
 export const MongoDBProvider = [{
     provide: 'MONGO_CONNECTION',
