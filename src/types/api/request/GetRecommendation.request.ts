@@ -1,3 +1,8 @@
 export interface GetRecommendationRequest {
-    user_id: string;
+    params: {
+        number: number;
+    }
+    pathVariable: {
+        user_id: string;
+    }
 }
