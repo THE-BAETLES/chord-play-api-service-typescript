@@ -1,17 +1,15 @@
 import {Document} from "mongoose"
 import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose"
-
+import { ObjectId } from "mongoose";
 export type VideoDocument = Video & Document;
 
 @Schema()
 export class Video {
-    @Prop({required: true})
+    @Prop({type: String, required: true})
     _id: string;
 
-    @Prop()
     thumbnail_path: string;
 
-    @Prop()
     title: string;
 
     @Prop()
