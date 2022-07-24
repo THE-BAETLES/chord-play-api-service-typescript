@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Auth } from 'firebase-admin/lib/auth/auth';
-import { VerifyException } from 'src/exception/verify.exception';
+import { VerifyException } from 'src/exceptions/verify.exception';
 
 @Injectable()
 export class FirebaseAuthService {

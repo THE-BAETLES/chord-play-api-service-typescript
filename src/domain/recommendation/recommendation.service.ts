@@ -1,10 +1,8 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { GetRecommendationRequest } from 'src/types/api/request/GetRecommendation.request';
 import { GetRecommendationResponse } from 'src/types/api/response/GetRecommendation.response';
 import { RecommendationConfigType } from 'src/configs/recommendation.config';
-import { HistoryService } from '../history/history.service';
 import { VideoDocument } from 'src/schemas/video.schema';
 import { VideoService } from '../video/video.service';
 @Injectable()
@@ -22,7 +20,6 @@ export class RecommendationService {
                 limit: limit
             }
         })).data;
-
         const recommendationList = response.payload.recommendation_list;
         return this.videoService.findById(recommendationList);
     }
