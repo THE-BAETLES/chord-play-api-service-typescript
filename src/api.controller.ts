@@ -22,10 +22,10 @@ export class ApiController {
   async recommendation(@Param('user_id') user_id: string, @Query('number') number: number): Promise<any> {
     const recommendationRequest: GetRecommendationRequest = {
       params: {
-        number: number
-      },
-      pathVariable: {
         user_id: user_id
+      },
+      query: {
+        number: number
       }
     }
     const recommendationResults = await this.recommendationService.getRecommendation(recommendationRequest);
