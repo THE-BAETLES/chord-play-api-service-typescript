@@ -6,10 +6,11 @@ import { RedisConfigType } from "./redis.config";
 import { RecommendationConfigType } from "./recommendation.config";
 
 if(process.env.NODE_ENV === 'development') {
-    dotenv.config({path: ".development.env"})
+    dotenv.config({path: "development.env"})
     Logger.log(".development.env")
 } else {
-    dotenv.config({path: ".production.env"})
+    Logger.log(".production.env")
+    dotenv.config({path: "production.env"})
 }
 
 export interface ConfigType {
