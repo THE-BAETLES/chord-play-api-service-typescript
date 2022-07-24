@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { GetRecommendationResponse } from 'src/types/api/response/GetRecommendation.response';
 import { RecommendationConfigType } from 'src/configs/recommendation.config';
@@ -13,6 +13,7 @@ export class RecommendationService {
     }
 
     async getRecommendation(user_id: string, offset: number, limit: number): Promise<VideoDocument[]> {
+        Logger.log("Recommendation Start!!");
         const {endpoint, port} = this.config.get<RecommendationConfigType>('recommendation');
         const response: GetRecommendationResponse = (await this.httpService.axiosRef.get(`${endpoint}:${port}/recommendation/${user_id}`, {
             params: {
@@ -21,6 +22,7 @@ export class RecommendationService {
             }
         })).data;
         const recommendationList = response.payload.recommendation_list;
+        Logger.log("Recommendation End!!");
         return this.videoService.findById(recommendationList);
     }
 }
