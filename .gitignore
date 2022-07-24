@@ -5,6 +5,9 @@
 # environments
 *.*env*
 
+# Rest test
+*.rest
+
 # Logs
 logs
 *.log
