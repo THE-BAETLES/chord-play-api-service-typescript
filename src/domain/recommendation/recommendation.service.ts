@@ -4,21 +4,26 @@ import { ConfigService } from '@nestjs/config';
 import { GetRecommendationRequest } from 'src/types/api/request/GetRecommendation.request';
 import { GetRecommendationResponse } from 'src/types/api/response/GetRecommendation.response';
 import { RecommendationConfigType } from 'src/configs/recommendation.config';
+import { HistoryService } from '../history/history.service';
+import { VideoDocument } from 'src/schemas/video.schema';
+import { VideoService } from '../video/video.service';
 @Injectable()
 export class RecommendationService {
-    constructor(private httpService: HttpService, private config: ConfigService){
+    constructor(private httpService: HttpService,
+         private config: ConfigService,
+         private videoService: VideoService){
     }
 
-    async getRecommendation(recommendationRequest: GetRecommendationRequest): Promise<GetRecommendationResponse> {
-        const {
-            endpoint,
-            port
-        } = this.config.get<RecommendationConfigType>('recommendation');
+    async getRecommendation(user_id: string, offset: number, limit: number): Promise<VideoDocument[]> {
+        const {endpoint, port} = this.config.get<RecommendationConfigType>('recommendation');
+        const response: GetRecommendationResponse = (await this.httpService.axiosRef.get(`${endpoint}:${port}/recommendation/${user_id}`, {
+            params: {
+                offset: offset,
+                limit: limit
+            }
+        })).data;
 
-        const userId = recommendationRequest.params.user_id
-        const number = recommendationRequest.query.number;
-
-        const response = (await this.httpService.axiosRef.get(`${endpoint}:${port}/recommendation/${userId}?number=${number}`));
-        return response.data;
+        const recommendationList = response.payload.recommendation_list;
+        return this.videoService.findById(recommendationList);
     }
 }

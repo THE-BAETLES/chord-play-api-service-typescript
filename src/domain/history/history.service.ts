@@ -12,13 +12,13 @@ export class HistoryService {
         
     }
 
-    async findAll(): Promise<WatchHistoryDocument[]>{
-        return this.historyModel.find().sort({'last_played': -1}).exec();
+    async findAll(userId: string): Promise<WatchHistoryDocument[]>{
+        return this.historyModel.find({'user_id': userId}).sort({'last_played': -1}).exec();
 
     }
 
-    async findSubset(offset: number, limit: number): Promise<WatchHistoryDocument[]>{
-        return this.historyModel.find().skip(offset).sort({'last_played': -1}).limit(limit).exec();
+    async findSubset(userId: string, offset: number, limit: number): Promise<WatchHistoryDocument[]>{
+        return this.historyModel.find({'user_id': userId}).skip(offset).sort({'last_played': -1}).limit(limit).exec();
     }
     
 }
