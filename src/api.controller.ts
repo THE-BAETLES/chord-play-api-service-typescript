@@ -1,15 +1,18 @@
-import { Controller, Get, Header, Headers, Param, Post, Query, Req } from '@nestjs/common';
+import { Controller, Get, Header, Headers, Param, Post, Query, Req, Res } from '@nestjs/common';
 import { HistoryService } from './domain/history/history.service';
 import { RecommendationService } from './domain/recommendation/recommendation.service';
 import { UserService } from './domain/user/user.service';
 import { PostSignUpResponse } from './types/api/response/PostSignUp.response';
 import { Request } from '@nestjs/common';
-
+import { Response } from 'express';
+import { SheetService } from './domain/sheet/sheet.service';
 @Controller('v1')
 export class ApiController {
   constructor(private recommendationService: RecommendationService,
      private userService: UserService,
-     private historyService: HistoryService) {}
+     private historyService: HistoryService,
+     private sheetService: SheetService
+     ) {}
 
   @Post('signup')
   async signUp(): Promise<PostSignUpResponse>{
@@ -20,7 +23,7 @@ export class ApiController {
   }
 
   @Get('aisheet')
-  async createAISheet(@Request() req: any) {
+  async createAISheet(@Request() req: any, @Res() res: Response) {
   }
 
   @Get('watch-history')
