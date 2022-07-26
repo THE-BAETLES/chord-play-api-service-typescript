@@ -1,11 +1,11 @@
 
 export interface URIOption {
-    protocol: 'redis' | 'mongo' | undefined;
-    username: string;
-    password: string | undefined;
+    protocol: 'redis' | 'mongo';
+    username?: string;
+    password?: string | undefined;
     host: string;
-    port: string | undefined;
-    database: string | undefined;
+    port?: string | undefined;
+    database?: string | undefined;
 }
 
 export const getURI = (option: URIOption) => {
