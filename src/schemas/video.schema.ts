@@ -22,13 +22,13 @@ export class Video {
     tags: string[];
 
     @Prop()
-    length: Number;
+    length: number;
 
     @Prop()
-    difficulty_avg: Number;
+    difficulty_avg: number;
 
     @Prop()
-    play_count: Number;
+    play_count: number;
 }
 
 export const VideoSchema = SchemaFactory.createForClass(Video);
