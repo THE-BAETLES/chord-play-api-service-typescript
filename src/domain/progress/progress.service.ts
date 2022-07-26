@@ -14,4 +14,8 @@ export class ProgressService {
     // channel name like video_id
         await this.connection.unsubscribe(channel)
     }
+
+    async check(videoId: string): Promise<number>{
+        return Number(this.connection.get(videoId))
+    }
 }

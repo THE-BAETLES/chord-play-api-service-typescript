@@ -1,6 +1,5 @@
 import { SheetDataDocument } from "src/schemas/sheetData.schema";
-
-export interface CreateAISheetMessage {
+export interface PostCreateAISheetResponse {
     status: number;
     payload: SheetDataDocument;
 }

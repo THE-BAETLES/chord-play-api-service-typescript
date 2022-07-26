@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { ChordInfo } from "../types/api/models/chordinfo.model";
 
-export type SheetDocument = SheetData & Document;
+export type SheetDataDocument = SheetData & Document;
 
 @Schema()
 export class SheetData {
