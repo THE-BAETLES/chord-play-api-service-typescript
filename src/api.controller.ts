@@ -1,8 +1,9 @@
-import { Controller, Get, Header, Headers, Param, Post, Query } from '@nestjs/common';
+import { Controller, Get, Header, Headers, Param, Post, Query, Req } from '@nestjs/common';
 import { HistoryService } from './domain/history/history.service';
 import { RecommendationService } from './domain/recommendation/recommendation.service';
 import { UserService } from './domain/user/user.service';
 import { PostSignUpResponse } from './types/api/response/PostSignUp.response';
+import { Request } from '@nestjs/common';
 
 @Controller('v1')
 export class ApiController {
@@ -16,6 +17,10 @@ export class ApiController {
       status: 'FAILED',
       payload: 'EXCEPTION'
     }
+  }
+
+  @Get('aisheet')
+  async createAISheet(@Request() req: any) {
   }
 
   @Get('watch-history')
