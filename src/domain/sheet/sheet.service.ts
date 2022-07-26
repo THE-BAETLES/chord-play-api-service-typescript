@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import e, { Response } from 'express';
 import { Model } from 'mongoose';
 import { CreateAISheetMessage } from 'src/message/createAISheet.message';
@@ -18,11 +18,6 @@ export class SheetService {
         @Inject('SHEET_DATA_MODEL') private sheetData: Model<SheetDataDocument>,
         @Inject('SHEET_MODEL') private sheet: Model<SheetDocumnet>
     ){}
-
-    async isStatusSame(createAIRequest: PostCreateAISheetRequest): Promise<boolean> {
-        const progressStatus = await this.progressService.check(createAIRequest.videoId);
-        return progressStatus === createAIRequest.status;
-    }
 
     async stopPolling(){
         clearTimeout(this.timer);
@@ -53,20 +48,30 @@ export class SheetService {
 
 
     async startPooling(createAIRequest: PostCreateAISheetRequest, res){
+        Logger.log("Polling start")
         this.checkAndSend(createAIRequest, res);
         this.timer = async () => {
             this.checkAndSend(createAIRequest, res);
             res.status(200).end();
+            Logger.log("Polling end");
         }, 10000
+
     }
-    
+
+    async createAISheetSchema(createAIRequest: PostCreateAISheetRequest){
+        const videoId = createAIRequest.videoId;
+        const createdAISheet = new this.sheet({video_id: videoId});
+        await createdAISheet.save();
+    }
+
     async createAISheet(createAIRequest: PostCreateAISheetRequest, res: Response){
         const {videoId, status} = createAIRequest;
-
         //TODO: Create Empty Sheet Schema
+        await this.createAISheetSchema(createAIRequest);
         //TODO: SendMessage to inference sqs
 
         this.startPooling(createAIRequest, res);
+        
         const findHandler = async (message: CreateAISheetMessage) => {
             if(message.status != status) {
                 this.stopPolling();
@@ -74,7 +79,6 @@ export class SheetService {
             }
         }
         this.progressService.on(videoId, findHandler);
-        //long polling 10s
         while(true) {}
     }
     async createSheet(){

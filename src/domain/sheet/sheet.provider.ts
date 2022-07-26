@@ -14,6 +14,7 @@ export const sheetProvider = [{
         return sheet;
     },
     inject: ['connection']
+
 }, {
     provide: `${SHEET_DATA}_MODEL`,
     useFactory: (connection: Connection) => {
