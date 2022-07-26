@@ -1,6 +1,7 @@
 
 export interface URIOption {
     protocol: 'redis' | 'mongo' | undefined;
+    username: string;
     password: string | undefined;
     host: string;
     port: string | undefined;
@@ -8,6 +9,6 @@ export interface URIOption {
 }
 
 export const getURI = (option: URIOption) => {
-    const {protocol, password, host, port, database} = option;
-    return `${protocol}://${password && `:${password}@`}${host}${port && `:${port}`}${database && `:${database}`}`;
+    const {protocol, username, password, host, port, database} = option;
+    return `${protocol}://${username || ""}${password ? `:${password}@` : ""}${host}${port ? `:${port}`: ""}${database ? `:${database}`: ""}`;
 }
