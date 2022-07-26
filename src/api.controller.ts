@@ -19,13 +19,13 @@ export class ApiController {
   }
 
   @Get('watch-history')
-  async watchHistory(@Headers('accessToken') accessToken: string ,@Query('offset') offset: number, @Query('limit') limit: number) {
+  async watchHistory(@Headers('Authorization') accessToken: string ,@Query('offset') offset: number, @Query('limit') limit: number) {
     const user_id = await this.userService.getUserId(accessToken);
     return this.historyService.findSubset(user_id, offset, limit)
   }
 
   @Get('recommendation')
-  async recommendation(@Headers('accessToken') accessToken: string, @Query('offset') offset: number, @Query('limit') limit: number): Promise<any> {
+  async recommendation(@Headers('Authorization') accessToken: string, @Query('offset') offset: number, @Query('limit') limit: number): Promise<any> {
     const user_id = await this.userService.getUserId(accessToken);
     const recommendationResults = await this.recommendationService.getRecommendation(user_id, offset, limit);
     return recommendationResults;
