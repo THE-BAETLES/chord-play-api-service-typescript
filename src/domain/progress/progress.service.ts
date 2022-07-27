@@ -6,7 +6,6 @@ import {Response} from "express";
 import { Model } from 'mongoose';
 import { SheetDataDocument } from 'src/schemas/sheetData.schema';
 import { PostCreateAISheetResponse } from 'src/types/api/response/PostCreateAISheet.response';
-import { EventEmitter } from "events";
 
 @Injectable()
 export class ProgressService {

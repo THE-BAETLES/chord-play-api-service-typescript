@@ -11,8 +11,6 @@ import { ProgressService } from '../progress/progress.service';
 
 @Injectable()
 export class SheetService {
-    private timer;
-
     constructor(
         private progressService: ProgressService,
         @Inject('VIDEO_MODEL') private video: Model<VideoDocument>,
@@ -28,9 +26,10 @@ export class SheetService {
 
     async createAISheet(createAIRequest: PostCreateAISheetRequest, res: Response){
         const {videoId, status} = createAIRequest;
+        //TODO: Send Message to SQS
+        
         //TODO: Create Empty Sheet Schema
         await this.createAISheetSchema(createAIRequest);
-        // off 를 호출하려면 listener 를 알아야 함
         await this.progressService.on(videoId, status, res);
         await this.progressService.start(createAIRequest, res);
     }
