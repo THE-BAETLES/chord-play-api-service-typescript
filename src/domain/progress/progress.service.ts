@@ -6,6 +6,8 @@ import { Model } from 'mongoose';
 import { SheetDataDocument } from 'src/schemas/sheetData.schema';
 import { PostCreateAISheetResponse } from 'src/types/api/response/PostCreateAISheet.response';
 import { CreateAISheetMessage } from 'src/message/redis/createAISheet.message';
+import { resolve } from 'path';
+import { sleep } from 'src/utils/time';
 
 @Injectable()
 export class ProgressService {
@@ -18,7 +20,9 @@ export class ProgressService {
         const {videoId, status} = createAIRequest;
         const progressStatus = await this.check(createAIRequest.videoId);
 
-        if(progressStatus !== status) {
+        Logger.log("CheckAndSend", status != progressStatus)
+        if(progressStatus != status) {
+            Logger.log("CheckAndSend", status !== progressStatus)
             await this.statusChangeHandler(videoId, progressStatus, res, channel);
         }
     }
@@ -42,11 +46,16 @@ export class ProgressService {
     private async startPolling(createAIRequest: PostCreateAISheetRequest, res: Response, channel: string){
         Logger.log("Long polling start");
         await this.checkAndSend(createAIRequest, res, channel);
-        this.timer = async () => {
+        this.timer = setTimeout(async () => {
             await this.checkAndSend(createAIRequest, res, channel);
             Logger.log("Long polling end");
-            res.status(200).send(createAIRequest);
-        }, 10000
+            res.status(200).send({
+                status: createAIRequest.status,
+                payload: null
+            });
+            resolve
+        }, 10000)
+       
     }
 
     private async stopPolling(){
@@ -85,6 +94,7 @@ export class ProgressService {
     }
 
     private async check(videoId: string): Promise<number>{
-        return Number(this.connection.get(videoId))
+        return 0
+        // return Number(this.connection.get(videoId))
     }
 }

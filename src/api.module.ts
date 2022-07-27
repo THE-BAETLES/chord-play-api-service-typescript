@@ -8,6 +8,7 @@ import { HttpModule } from '@nestjs/axios';
 import { UserModule } from './domain/user/user.module';
 import { SqsModule } from './infra/sqs/sqs.module';
 import { ProgressModule } from './domain/progress/progress.module';
+import { SheetModule } from './domain/sheet/sheet.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -18,7 +19,8 @@ import { ProgressModule } from './domain/progress/progress.module';
       HistoryModule,
       UserModule,
       SqsModule,
-      ProgressModule
+      ProgressModule,
+      SheetModule
   ],
   controllers: [ApiController],
   providers: [],

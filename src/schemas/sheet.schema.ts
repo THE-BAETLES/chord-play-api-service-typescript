@@ -5,9 +5,6 @@ export type SheetDocumnet = Sheet & Document;
 
 @Schema()
 export class Sheet {
-    @Prop({type: String})
-    _id: ObjectId;
-
     @Prop()
     video_id: string;
 

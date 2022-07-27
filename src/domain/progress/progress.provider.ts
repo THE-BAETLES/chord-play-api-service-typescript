@@ -17,6 +17,7 @@ export const progressProvider = [{
             Logger.log("Redis connection error");
         })
         await client.connect();
+        const test = client.duplicate().connect();
         return client
     },
     inject: [ConfigService]
