@@ -7,28 +7,27 @@ import { SheetDataDocument } from 'src/schemas/sheetData.schema';
 import { PostCreateAISheetResponse } from 'src/types/api/response/PostCreateAISheet.response';
 import { CreateAISheetMessage } from 'src/message/redis/createAISheet.message';
 import { resolve } from 'path';
-import { sleep } from 'src/utils/time';
-
+import { SUBSCRIBE_PROGRESS_CONNECTION } from './progress.provider';
+import { CHECK_PROGRESS_CONNECTION } from './progress.provider';
+import { SHEET_DATA_MODEL } from '../sheet/sheet.provider';
 @Injectable()
 export class ProgressService {
     private timer;
     constructor(
-    @Inject('PROGRESS_CONNECTION') private connection: RedisClientType,
-    @Inject('SHEET_DATA_MODEL') private sheetData: Model<SheetDataDocument>){}
+    @Inject(SUBSCRIBE_PROGRESS_CONNECTION) private connection: RedisClientType,
+    @Inject(CHECK_PROGRESS_CONNECTION) private checkConnection: RedisClientType,
+    @Inject(SHEET_DATA_MODEL) private sheetData: Model<SheetDataDocument>){}
     
     private async checkAndSend(createAIRequest: PostCreateAISheetRequest, res: Response, channel: string) {
         const {videoId, status} = createAIRequest;
         const progressStatus = await this.check(createAIRequest.videoId);
-
-        Logger.log("CheckAndSend", status != progressStatus)
         if(progressStatus != status) {
-            Logger.log("CheckAndSend", status !== progressStatus)
             await this.statusChangeHandler(videoId, progressStatus, res, channel);
         }
     }
 
     private async statusChangeHandler(videoId, progressStatus, res, channel: string){
-        if(progressStatus === 3) {
+        if(progressStatus == 3) {
             await this.sheetCreatedHandler(videoId, res, channel);
         }
         await this.send({status: progressStatus, payload: null},res, channel);
@@ -44,11 +43,9 @@ export class ProgressService {
     }
 
     private async startPolling(createAIRequest: PostCreateAISheetRequest, res: Response, channel: string){
-        Logger.log("Long polling start");
         await this.checkAndSend(createAIRequest, res, channel);
         this.timer = setTimeout(async () => {
             await this.checkAndSend(createAIRequest, res, channel);
-            Logger.log("Long polling end");
             res.status(200).send({
                 status: createAIRequest.status,
                 payload: null
@@ -82,7 +79,7 @@ export class ProgressService {
         const progressSubHandler = (message : Buffer) => {
             const sheetMessage: CreateAISheetMessage = JSON.parse(message.toString());
             const progressStatus = sheetMessage.status;
-            if(progressStatus !== status) {
+            if(progressStatus != status) {
                 this.send(sheetMessage, res,channel);
             }
         }
@@ -94,7 +91,6 @@ export class ProgressService {
     }
 
     private async check(videoId: string): Promise<number>{
-        return 0
-        // return Number(this.connection.get(videoId))
+        return Number(this.connection.get(videoId))
     }
 }
