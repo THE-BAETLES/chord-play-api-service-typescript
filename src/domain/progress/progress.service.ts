@@ -1,11 +1,11 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { RedisClientType } from '@redis/client';
-import { CreateAISheetMessage } from 'src/message/createAISheet.message';
 import { PostCreateAISheetRequest } from 'src/types/api/request/PostCreateAISheet.request';
 import {Response} from "express";
 import { Model } from 'mongoose';
 import { SheetDataDocument } from 'src/schemas/sheetData.schema';
 import { PostCreateAISheetResponse } from 'src/types/api/response/PostCreateAISheet.response';
+import { CreateAISheetMessage } from 'src/message/redis/createAISheet.message';
 
 @Injectable()
 export class ProgressService {

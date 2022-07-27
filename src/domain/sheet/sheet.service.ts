@@ -1,8 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { create } from 'domain';
-import e, { Response } from 'express';
+import { Response } from 'express';
 import { Model } from 'mongoose';
-import { CreateAISheetMessage } from 'src/message/createAISheet.message';
 import { SheetDocumnet } from 'src/schemas/sheet.schema';
 import { SheetDataDocument } from 'src/schemas/sheetData.schema';
 import { VideoDocument } from 'src/schemas/video.schema';
@@ -27,7 +25,7 @@ export class SheetService {
     async createAISheet(createAIRequest: PostCreateAISheetRequest, res: Response){
         const {videoId, status} = createAIRequest;
         //TODO: Send Message to SQS
-        
+
         //TODO: Create Empty Sheet Schema
         await this.createAISheetSchema(createAIRequest);
         await this.progressService.on(videoId, status, res);

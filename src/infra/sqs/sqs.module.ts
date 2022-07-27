@@ -1,4 +1,8 @@
 import { Module } from '@nestjs/common';
-
-@Module({})
+import { SqsService } from './sqs.service';
+import { InferenceSQSProvider } from './sqs.provider';
+@Module({
+    providers: [SqsService, ...InferenceSQSProvider],
+    exports: [SqsService, ...InferenceSQSProvider]
+})
 export class SqsModule {}

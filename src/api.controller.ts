@@ -11,7 +11,6 @@ export class ApiController {
   constructor(private recommendationService: RecommendationService,
      private userService: UserService,
      private historyService: HistoryService,
-     private sheetService: SheetService
      ) {}
 
   @Post('signup')
