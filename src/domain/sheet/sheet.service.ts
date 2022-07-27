@@ -23,9 +23,13 @@ export class SheetService {
     }
 
     async createAISheet(createAIRequest: PostCreateAISheetRequest, res: Response){
+        /**
+         * CreateAiSheet Business logic
+         * 2. if sheet_data exist return sheet_data as payload with status 3
+         * 3. if sheet_data doesn`t exist create sheet schema and start long polling
+         * 4. sheet_data will create by inference server u don`t care about that on this server
+         */
         const {videoId, status} = createAIRequest;
-        //TODO: Send Message to SQS
-        //TODO: Create Empty Sheet Schema
         await this.createAISheetSchema(createAIRequest);
         await this.progressService.on(videoId, status, res);
         await this.progressService.start(createAIRequest, res);
