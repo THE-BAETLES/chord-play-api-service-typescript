@@ -6,8 +6,10 @@ import { Logger } from "@nestjs/common";
 export const progressProvider = [{
     provide: 'PROGRESS_CONNECTION',
     useFactory: async (configuration: ConfigService) => {
+        Logger.log("Redis Connect start");
         const {endpoint, port} = configuration.get<RedisConfigType>('redis');
         const uri = getURI({protocol: 'redis', host: endpoint, port: port});
+        Logger.log("uri = ", uri);
         const client = createClient({
             url: uri
         })

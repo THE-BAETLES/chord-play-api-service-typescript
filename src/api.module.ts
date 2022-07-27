@@ -7,6 +7,7 @@ import { RecommendationModule } from './domain/recommendation/recommendation.mod
 import { HttpModule } from '@nestjs/axios';
 import { UserModule } from './domain/user/user.module';
 import { SqsModule } from './infra/sqs/sqs.module';
+import { ProgressModule } from './domain/progress/progress.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -16,7 +17,8 @@ import { SqsModule } from './infra/sqs/sqs.module';
       RecommendationModule,
       HistoryModule,
       UserModule,
-      SqsModule
+      SqsModule,
+      ProgressModule
   ],
   controllers: [ApiController],
   providers: [],

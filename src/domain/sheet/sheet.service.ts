@@ -25,7 +25,6 @@ export class SheetService {
     async createAISheet(createAIRequest: PostCreateAISheetRequest, res: Response){
         const {videoId, status} = createAIRequest;
         //TODO: Send Message to SQS
-
         //TODO: Create Empty Sheet Schema
         await this.createAISheetSchema(createAIRequest);
         await this.progressService.on(videoId, status, res);

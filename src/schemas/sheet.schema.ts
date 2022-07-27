@@ -5,7 +5,7 @@ export type SheetDocumnet = Sheet & Document;
 
 @Schema()
 export class Sheet {
-    @Prop()
+    @Prop({type: String})
     _id: ObjectId;
 
     @Prop()

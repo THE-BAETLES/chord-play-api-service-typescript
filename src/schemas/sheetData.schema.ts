@@ -5,7 +5,7 @@ export type SheetDataDocument = SheetData & Document;
 
 @Schema()
 export class SheetData {
-    @Prop({type: String,required: true})
+    @Prop({type: String, required: true})
     _id: string;
 
     @Prop()

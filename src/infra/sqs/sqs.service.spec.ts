@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SqsService } from './sqs.service';
-import {SqsModule} from "./sqs.module";
 import { ConfigModule} from '@nestjs/config';
 import {InferenceSQSProvider} from "./sqs.provider";
 import configuration from "./configuration"
@@ -23,7 +22,7 @@ describe('SqsService', () => {
   });
 
   it('Sqs message send test',async () => {
-    expect(service).toBeDefined();
+    expect(service).toBeDefined;
     await service.sendCreateSheetMessage({
       status: 0,
       videoId: "asdfasdfsaf"

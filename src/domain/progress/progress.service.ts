@@ -9,10 +9,9 @@ import { CreateAISheetMessage } from 'src/message/redis/createAISheet.message';
 
 @Injectable()
 export class ProgressService {
-
     private timer;
-
-    constructor(@Inject('PROGRESS_CONNECTION') private connection: RedisClientType,
+    constructor(
+    @Inject('PROGRESS_CONNECTION') private connection: RedisClientType,
     @Inject('SHEET_DATA_MODEL') private sheetData: Model<SheetDataDocument>){}
     
     private async checkAndSend(createAIRequest: PostCreateAISheetRequest, res: Response, channel: string) {
@@ -41,9 +40,11 @@ export class ProgressService {
     }
 
     private async startPolling(createAIRequest: PostCreateAISheetRequest, res: Response, channel: string){
+        Logger.log("Long polling start");
         await this.checkAndSend(createAIRequest, res, channel);
         this.timer = async () => {
             await this.checkAndSend(createAIRequest, res, channel);
+            Logger.log("Long polling end");
             res.status(200).send(createAIRequest);
         }, 10000
     }

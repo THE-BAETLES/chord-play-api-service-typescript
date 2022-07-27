@@ -13,12 +13,13 @@ export const sheetProvider = [{
         const sheet = connection.model(SHEET, SheetSchema ,SHEET);
         return sheet;
     },
-    inject: ['connection']
+    inject: ['MONGO_CONNECTION']
 
 }, {
     provide: `${SHEET_DATA}_MODEL`,
     useFactory: (connection: Connection) => {
         const sheetdata = connection.model(SHEET_DATA, SheetDataSchema, SHEET_DATA);
         return sheetdata;
-    }
+    },
+    inject: ['MONGO_CONNECTION']
 }]
