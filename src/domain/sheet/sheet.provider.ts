@@ -1,6 +1,6 @@
 import { Connection } from "mongoose";
-import { Sheet, SheetSchema } from "src/schemas/sheet.schema";
-import { SheetData, SheetDataSchema } from "src/schemas/sheetData.schema";
+import { SheetSchema } from "src/schemas/sheet.schema";
+import { SheetDataSchema } from "src/schemas/sheetData.schema";
 
 export const SHEET_DATA = 'SHEET_DATA';
 

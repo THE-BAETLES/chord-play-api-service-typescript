@@ -1,4 +1,4 @@
-import { AddPermissionCommand, SendMessageCommand, SQSClient } from '@aws-sdk/client-sqs';
+import { SendMessageCommand, SQSClient } from '@aws-sdk/client-sqs';
 import { Inject, Injectable } from '@nestjs/common';
 import { PostCreateAISheetRequest } from 'src/types/api/request/PostCreateAISheet.request';
 

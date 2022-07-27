@@ -1,6 +1,5 @@
 import { MongoConfigType } from "./mongo.config";
 import * as dotenv from 'dotenv'
-import * as path from "path";
 import { Logger } from "@nestjs/common";
 import { RedisConfigType } from "./redis.config";
 import { RecommendationConfigType } from "./recommendation.config";

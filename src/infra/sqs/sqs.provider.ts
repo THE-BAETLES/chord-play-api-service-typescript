@@ -1,7 +1,6 @@
 import { SQSClient } from "@aws-sdk/client-sqs";
 import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import sqs from "aws-sdk/clients/sqs";
 import { AwsConfigType } from "src/configs/aws.config";
 import { InferenceQueueConfigType } from "src/configs/inferenceQueue.config";
 
