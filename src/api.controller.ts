@@ -3,13 +3,10 @@ import { HistoryService } from './domain/history/history.service';
 import { RecommendationService } from './domain/recommendation/recommendation.service';
 import { UserService } from './domain/user/user.service';
 import { PostSignUpResponse } from './types/api/response/PostSignUp.response';
-import { Request } from '@nestjs/common';
 import { Response } from 'express';
 import { SheetService } from './domain/sheet/sheet.service';
 import { PostCreateAISheetRequest } from './types/api/request/PostCreateAISheet.request';
-import { create } from 'domain';
-import { sleep } from './utils/time';
-@Controller('v1')
+@Controller('v1') 
 export class ApiController {
   constructor(private recommendationService: RecommendationService,
      private userService: UserService,

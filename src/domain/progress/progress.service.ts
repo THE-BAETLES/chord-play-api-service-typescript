@@ -91,6 +91,6 @@ export class ProgressService {
     }
 
     private async check(videoId: string): Promise<number>{
-        return Number(this.connection.get(videoId))
+        return Number(await this.checkConnection.get(videoId))
     }
 }

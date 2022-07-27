@@ -1,7 +1,7 @@
 import { Connection } from "mongoose";
 import { SheetSchema } from "src/schemas/sheet.schema";
 import { SheetDataSchema } from "src/schemas/sheetData.schema";
-
+import { MONGO_CONNECTION } from "src/database/mongo/mongodb.providers";
 export const SHEET_DATA = 'SHEET_DATA';
 export const SHEET = 'SHEET';
 export const SHEET_DATA_MODEL = SHEET_DATA + '_MODEL';
@@ -13,7 +13,7 @@ export const sheetProvider = [{
         const sheet = connection.model(SHEET, SheetSchema ,SHEET);
         return sheet;
     },
-    inject: ['MONGO_CONNECTION']
+    inject: [MONGO_CONNECTION]
 
 }, {
     provide: SHEET_DATA_MODEL,
@@ -21,6 +21,6 @@ export const sheetProvider = [{
         const sheetdata = connection.model(SHEET_DATA, SheetDataSchema, SHEET_DATA);
         return sheetdata;
     },
-    inject: ['MONGO_CONNECTION']
+    inject: [MONGO_CONNECTION]
 
 }]

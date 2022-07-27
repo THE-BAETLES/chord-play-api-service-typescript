@@ -6,14 +6,16 @@ import { SheetDataDocument } from 'src/schemas/sheetData.schema';
 import { VideoDocument } from 'src/schemas/video.schema';
 import { PostCreateAISheetRequest } from 'src/types/api/request/PostCreateAISheet.request';
 import { ProgressService } from '../progress/progress.service';
-
+import { SHEET_DATA } from './sheet.provider';
+import { SHEET_MODEL } from './sheet.provider';
+import { SHEET_DATA_MODEL } from './sheet.provider';
 @Injectable()
 export class SheetService {
     constructor(
         private progressService: ProgressService,
         @Inject('VIDEO_MODEL') private video: Model<VideoDocument>,
-        @Inject('SHEET_DATA_MODEL') private sheetData: Model<SheetDataDocument>,
-        @Inject('SHEET_MODEL') private sheet: Model<SheetDocumnet>
+        @Inject(SHEET_DATA_MODEL) private sheetData: Model<SheetDataDocument>,
+        @Inject(SHEET_MODEL) private sheet: Model<SheetDocumnet>
     ){}
 
     private async createAISheetSchema(createAIRequest: PostCreateAISheetRequest){
