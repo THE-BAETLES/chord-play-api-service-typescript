@@ -4,6 +4,8 @@ import * as path from "path";
 import { Logger } from "@nestjs/common";
 import { RedisConfigType } from "./redis.config";
 import { RecommendationConfigType } from "./recommendation.config";
+import { AwsConfigType } from "./aws.config";
+import { InferenceQueueConfigType } from "./inferenceQueue.config";
 
 if(process.env.NODE_ENV === 'development') {
     dotenv.config({path: "development.env"})
@@ -16,7 +18,9 @@ if(process.env.NODE_ENV === 'development') {
 export interface ConfigType {
     mongo: MongoConfigType;
     redis: RedisConfigType;
-    recommendation: RecommendationConfigType
+    recommendation: RecommendationConfigType;
+    aws: AwsConfigType;
+    inferenceQueue: InferenceQueueConfigType;
 }
 
 export default (): ConfigType => ({
@@ -34,6 +38,15 @@ export default (): ConfigType => ({
     recommendation: {
         endpoint: process.env.RECOMMENDATION_ENDPOINT,
         port: process.env.RECOMMENDATION_PORT
+    },
+    aws: {
+        region: process.env.AWS_REGION || 'ap-northeast-2',
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretKey: process.env.AWS_SECRET_KEY
+    },
+    inferenceQueue: {
+        url: process.env.INFERENCE_QUEUE_URL,
+        apiVersion: process.env.INFERENCE_QUEUE_URL || '2012-11-05'
     }
 })
 
