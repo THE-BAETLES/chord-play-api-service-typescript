@@ -42,8 +42,9 @@ export class ProgressService {
       
     }
 
-    private async startPolling(createAIRequest: PostCreateAISheetRequest, res: Response, channel: string){
+    async startPolling(createAIRequest: PostCreateAISheetRequest, res: Response, channel: string){
         await this.checkAndSend(createAIRequest, res, channel);
+
         this.timer = setTimeout(async () => {
             await this.checkAndSend(createAIRequest, res, channel);
             res.status(200).send({
@@ -59,34 +60,32 @@ export class ProgressService {
         clearTimeout(this.timer);
     }
 
-    async start(createAIRequest: PostCreateAISheetRequest, res: Response){
-        const {videoId, status} = createAIRequest;
-        await this.startPolling(createAIRequest, res, videoId);
-    }
-
     async stop(channel: string){
         await this.stopPolling();
         await this.off(channel);
     }
-
+    
+    // finish transaction 으로 변경
+    // 1. 작동하는코드 
+    // 2. 최대한 edge 케이스를 생각해본다 예외 상황!
+    // 3. 네이밍이 정확하게 메소드가 하는 역할을 잘 표현하고 있는지
+    // 4. imperative: 명령한다? declartive: 다른 엔지니어가 볼때 바로 이해할수 있게 하는 것 (어떻게 how)를 추상화시킴 원하는 것을 주세요
+    // 다른 사람이 처음봤을때 이해할수있도록 네이밍하는게 중요함 어떻게 동작하는지는 중요하지 않음
     private async send(message: CreateAISheetMessage | PostCreateAISheetResponse, res: Response, channel: string) {
         this.stop(channel);
         res.status(200).send(message);
     }
 
 
-    async attachProgressHandlerToChannel(channel: string,  status: number, res: Response){
-        const progressSubHandler = (message : Buffer) => {
-
+    async attachProgressHandlerToChannel(channel: string,  clientStatus: number, res: Response){
+        const progressHandler = (message : Buffer) => {
             const sheetMessage: CreateAISheetMessage = JSON.parse(message.toString());
-            const progressStatus = sheetMessage.status;
-            
-            if(progressStatus != status) {
+            const serverStatus = sheetMessage.status;
+            if(serverStatus != clientStatus) {
                 this.send(sheetMessage, res,channel);
             }
         }
-
-        await this.connection.subscribe(channel,progressSubHandler, true);
+        await this.connection.subscribe(channel, progressHandler, true);
     }
 
     private async off(channel: string){

@@ -38,11 +38,12 @@ export class SheetService {
          * 추후에 알림 서비스를 사용하는 것도 고려해봐야함 (ex. FCM)
          */
         const {videoId, status} = createAIRequest;
+        const clientStatus = status;
         await this.createAISheetSchema(createAIRequest);
         await this.sqsService.sendCreateSheetMessage(createAIRequest);
         // sqs message send
         // 의미적으로 봤을 때 이벤트 리스너를 등록하는 것 처럼 보임
-        await this.progressService.attachProgressHandlerToChannel(videoId, status, res);
-        await this.progressService.start(createAIRequest, res);
+        await this.progressService.attachProgressHandlerToChannel(videoId, clientStatus, res);
+        await this.progressService.startPolling(createAIRequest, res, videoId);
     }
 }
