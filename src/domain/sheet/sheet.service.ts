@@ -9,13 +9,18 @@ import { ProgressService } from '../progress/progress.service';
 import { SHEET_DATA } from './sheet.provider';
 import { SHEET_MODEL } from './sheet.provider';
 import { SHEET_DATA_MODEL } from './sheet.provider';
+import { INFERENCE_SQS_CLIENT } from 'src/infra/sqs/sqs.provider';
+import { SQSClient } from '@aws-sdk/client-sqs';
+import { SqsService } from 'src/infra/sqs/sqs.service';
+
 @Injectable()
 export class SheetService {
     constructor(
         private progressService: ProgressService,
         @Inject('VIDEO_MODEL') private video: Model<VideoDocument>,
         @Inject(SHEET_DATA_MODEL) private sheetData: Model<SheetDataDocument>,
-        @Inject(SHEET_MODEL) private sheet: Model<SheetDocumnet>
+        @Inject(SHEET_MODEL) private sheet: Model<SheetDocumnet>,
+        private sqsService: SqsService
     ){}
 
     private async createAISheetSchema(createAIRequest: PostCreateAISheetRequest){
@@ -30,10 +35,14 @@ export class SheetService {
          * 2. if sheet_data exist return sheet_data as payload with status 3
          * 3. if sheet_data doesn`t exist create sheet schema and start long polling
          * 4. sheet_data will create by inference server u don`t care about that on this server
+         * 추후에 알림 서비스를 사용하는 것도 고려해봐야함 (ex. FCM)
          */
         const {videoId, status} = createAIRequest;
         await this.createAISheetSchema(createAIRequest);
-        await this.progressService.on(videoId, status, res);
+        await this.sqsService.sendCreateSheetMessage(createAIRequest);
+        // sqs message send
+        // 의미적으로 봤을 때 이벤트 리스너를 등록하는 것 처럼 보임
+        await this.progressService.attachProgressHandlerToChannel(videoId, status, res);
         await this.progressService.start(createAIRequest, res);
     }
 }

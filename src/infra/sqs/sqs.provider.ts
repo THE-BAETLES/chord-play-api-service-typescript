@@ -4,6 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { AwsConfigType } from "src/configs/aws.config";
 import { InferenceQueueConfigType } from "src/configs/inferenceQueue.config";
 
+export const INFERENCE_SQS_CLIENT = 'INFERENCE_SQS_CLIENT';
 export const InferenceSQSProvider = [{
     provide: 'INFERENCE_SQS_CLIENT',
     useFactory: async (config: ConfigService): Promise<SQSClient> => {

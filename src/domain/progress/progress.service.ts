@@ -75,14 +75,17 @@ export class ProgressService {
     }
 
 
-    async on(channel: string,  status: number, res: Response){
+    async attachProgressHandlerToChannel(channel: string,  status: number, res: Response){
         const progressSubHandler = (message : Buffer) => {
+
             const sheetMessage: CreateAISheetMessage = JSON.parse(message.toString());
             const progressStatus = sheetMessage.status;
+            
             if(progressStatus != status) {
                 this.send(sheetMessage, res,channel);
             }
         }
+
         await this.connection.subscribe(channel,progressSubHandler, true);
     }
 
