@@ -88,7 +88,10 @@ export class ProgressService {
     }
 
     private async off(channel: string){
-        await this.connection.unsubscribe(channel)
+        await this.connection.unsubscribe(channel);
+
+        await this.connection.disconnect();
+        await this.checkConnection.disconnect();
     }
 
     private async checkProgressStatus(videoId: string): Promise<number>{
