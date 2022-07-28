@@ -6,7 +6,7 @@ import { PostSignUpResponse } from './types/api/response/PostSignUp.response';
 import { Response } from 'express';
 import { SheetService } from './domain/sheet/sheet.service';
 import { PostCreateAISheetRequest } from './types/api/request/PostCreateAISheet.request';
-import { AISheetPipe } from './validation/aisheet.pipe';
+import { AISheetPipe } from 'src/validation/aisheet.pipe';
 @Controller('v1') 
 export class ApiController {
   constructor(private recommendationService: RecommendationService,

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { ChordInfo } from "../types/api/models/chordinfo.model";
+import { ChordInfo } from "src/types/api/models/chordinfo.model";
 
 export type SheetDataDocument = SheetData & Document;
 
@@ -8,7 +8,11 @@ export class SheetData {
     @Prop({type: String, required: true})
     _id: string;
 
+    @Prop({type:Number})
+    bpm: number;
+    
     @Prop()
     chord_infos: ChordInfo[];
 }
+
 export const SheetDataSchema = SchemaFactory.createForClass(SheetData);

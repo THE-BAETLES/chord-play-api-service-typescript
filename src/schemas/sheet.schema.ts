@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { ObjectId } from "mongoose";
 
-export type SheetDocumnet = Sheet & Document;
+export type SheetDocument = Sheet & Document;
 
 @Schema()
 export class Sheet {

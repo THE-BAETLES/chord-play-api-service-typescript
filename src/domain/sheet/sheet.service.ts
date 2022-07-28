@@ -1,7 +1,7 @@
 import { Inject, Injectable} from '@nestjs/common';
 import { Response } from 'express';
 import { Model } from 'mongoose';
-import { SheetDocumnet } from 'src/schemas/sheet.schema';
+import { SheetDocument } from 'src/schemas/sheet.schema';
 import { SheetDataDocument } from 'src/schemas/sheetData.schema';
 import { VideoDocument } from 'src/schemas/video.schema';
 import { PostCreateAISheetRequest } from 'src/types/api/request/PostCreateAISheet.request';
@@ -16,7 +16,7 @@ export class SheetService {
         private progressService: ProgressService,
         @Inject('VIDEO_MODEL') private video: Model<VideoDocument>,
         @Inject(SHEET_DATA_MODEL) private sheetData: Model<SheetDataDocument>,
-        @Inject(SHEET_MODEL) private sheet: Model<SheetDocumnet>,
+        @Inject(SHEET_MODEL) private sheet: Model<SheetDocument>,
         private sqsService: SqsService
     ){}
 
@@ -38,8 +38,7 @@ export class SheetService {
         const clientStatus = status;
         await this.createAISheetSchema(createAIRequest);
         await this.sqsService.sendCreateSheetMessage(createAIRequest);
-        // sqs message send
-        // 의미적으로 봤을 때 이벤트 리스너를 등록하는 것 처럼 보임
+
         await this.progressService.attachProgressHandlerToChannel(videoId, clientStatus, res);
         await this.progressService.startPolling(createAIRequest, res, videoId);
     }

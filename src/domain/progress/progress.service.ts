@@ -30,26 +30,24 @@ export class ProgressService {
         if(progressStatus === 3) {
             await this.sheetCreatedHandler(videoId, res, channel);
         }
-        await this.finishTransaction({status: progressStatus, payload: null},res, channel);
+        await this.finishTransaction({status: progressStatus},res, channel);
     }
 
     private async sheetCreatedHandler(videoId: string, res: Response, channel: string) {
         const sheetData: SheetDataDocument = await this.sheetData.findOne({'_id': videoId}).exec();
         await this.finishTransaction({
-            status: 3,
-            payload: sheetData
+            status: 3
         }, res, channel)
       
     }
-
+s
     async startPolling(createAIRequest: PostCreateAISheetRequest, res: Response, channel: string){
         await this.checkAndSend(createAIRequest, res, channel);
 
         this.timer = setTimeout(async () => {
             await this.checkAndSend(createAIRequest, res, channel);
             res.status(200).send({
-                status: createAIRequest.status,
-                payload: null
+                status: createAIRequest.status
             });
             resolve
         }, 10000)
@@ -64,7 +62,6 @@ export class ProgressService {
         await this.stopPolling();
         await this.off(channel);
     }
-    
     // finish transaction 으로 변경
     // 1. 작동하는코드 
     // 2. 최대한 edge 케이스를 생각해본다 예외 상황!
@@ -89,7 +86,6 @@ export class ProgressService {
 
     private async off(channel: string){
         await this.connection.unsubscribe(channel);
-
         await this.connection.disconnect();
         await this.checkConnection.disconnect();
     }

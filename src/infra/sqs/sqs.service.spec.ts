@@ -3,7 +3,6 @@ import { SqsService } from './sqs.service';
 import { ConfigModule} from '@nestjs/config';
 import {InferenceSQSProvider} from "./sqs.provider";
 import configuration from "./configuration"
-import { Logger } from '@nestjs/common';
 
 describe('SqsService', () => {
   let service: SqsService;
@@ -20,7 +19,7 @@ describe('SqsService', () => {
 
     service = module.get<SqsService>(SqsService);
   });
-  
+
   it('Sqs message send test',async () => {
     expect(service).toBeDefined;
     await service.sendCreateSheetMessage({

@@ -1,5 +1,5 @@
 import { Connection } from "mongoose";
-import { SheetSchema } from "src/schemas/sheet.schema";
+import { SheetDocument, SheetSchema } from "src/schemas/sheet.schema";
 import { SheetDataSchema } from "src/schemas/sheetData.schema";
 import { MONGO_CONNECTION } from "src/database/mongo/mongodb.providers";
 export const SHEET_DATA = 'SHEET_DATA';
