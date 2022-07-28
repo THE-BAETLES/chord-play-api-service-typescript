@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable} from '@nestjs/common';
 import { Response } from 'express';
 import { Model } from 'mongoose';
 import { SheetDocumnet } from 'src/schemas/sheet.schema';
@@ -6,11 +6,8 @@ import { SheetDataDocument } from 'src/schemas/sheetData.schema';
 import { VideoDocument } from 'src/schemas/video.schema';
 import { PostCreateAISheetRequest } from 'src/types/api/request/PostCreateAISheet.request';
 import { ProgressService } from '../progress/progress.service';
-import { SHEET_DATA } from './sheet.provider';
 import { SHEET_MODEL } from './sheet.provider';
 import { SHEET_DATA_MODEL } from './sheet.provider';
-import { INFERENCE_SQS_CLIENT } from 'src/infra/sqs/sqs.provider';
-import { SQSClient } from '@aws-sdk/client-sqs';
 import { SqsService } from 'src/infra/sqs/sqs.service';
 
 @Injectable()

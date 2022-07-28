@@ -6,12 +6,10 @@ import { InferenceQueueConfigType } from "src/configs/inferenceQueue.config";
 
 export const INFERENCE_SQS_CLIENT = 'INFERENCE_SQS_CLIENT';
 export const InferenceSQSProvider = [{
-    provide: 'INFERENCE_SQS_CLIENT',
+    provide: INFERENCE_SQS_CLIENT,
     useFactory: async (config: ConfigService): Promise<SQSClient> => {
-        Logger.log("Inference Sqs Client Connection start");
         const aws = config.get<AwsConfigType>('aws');
         const inferenceQueue = config.get<InferenceQueueConfigType>('inferenceQueue');
-        
         return await new SQSClient({
             region: aws.region,
             endpoint: inferenceQueue.url,

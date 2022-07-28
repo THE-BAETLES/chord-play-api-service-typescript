@@ -13,7 +13,6 @@ export class RecommendationService {
     }
 
     async getRecommendation(user_id: string, offset: number, limit: number): Promise<VideoDocument[]> {
-        Logger.log("Recommendation Start!!");
         const {endpoint, port} = this.config.get<RecommendationConfigType>('recommendation');
         const response: GetRecommendationResponse = (await this.httpService.axiosRef.get(`http://${endpoint}:${port}/recommendation/${user_id}`, {
             params: {
