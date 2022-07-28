@@ -20,22 +20,22 @@ export class ProgressService {
     
     private async checkAndSend(createAIRequest: PostCreateAISheetRequest, res: Response, channel: string) {
         const {videoId, status} = createAIRequest;
-        const progressStatus = await this.check(createAIRequest.videoId);
+        const progressStatus = await this.checkProgressStatus(createAIRequest.videoId);
         if(progressStatus != status) {
             await this.statusChangeHandler(videoId, progressStatus, res, channel);
         }
     }
 
-    private async statusChangeHandler(videoId, progressStatus, res, channel: string){
-        if(progressStatus == 3) {
+    private async statusChangeHandler(videoId:string, progressStatus: number, res, channel: string){
+        if(progressStatus === 3) {
             await this.sheetCreatedHandler(videoId, res, channel);
         }
-        await this.send({status: progressStatus, payload: null},res, channel);
+        await this.finishTransaction({status: progressStatus, payload: null},res, channel);
     }
 
     private async sheetCreatedHandler(videoId: string, res: Response, channel: string) {
         const sheetData: SheetDataDocument = await this.sheetData.findOne({'_id': videoId}).exec();
-        await this.send({
+        await this.finishTransaction({
             status: 3,
             payload: sheetData
         }, res, channel)
@@ -71,18 +71,17 @@ export class ProgressService {
     // 3. 네이밍이 정확하게 메소드가 하는 역할을 잘 표현하고 있는지
     // 4. imperative: 명령한다? declartive: 다른 엔지니어가 볼때 바로 이해할수 있게 하는 것 (어떻게 how)를 추상화시킴 원하는 것을 주세요
     // 다른 사람이 처음봤을때 이해할수있도록 네이밍하는게 중요함 어떻게 동작하는지는 중요하지 않음
-    private async send(message: CreateAISheetMessage | PostCreateAISheetResponse, res: Response, channel: string) {
+    private async finishTransaction(message: CreateAISheetMessage | PostCreateAISheetResponse, res: Response, channel: string) {
         this.stop(channel);
         res.status(200).send(message);
     }
-
 
     async attachProgressHandlerToChannel(channel: string,  clientStatus: number, res: Response){
         const progressHandler = (message : Buffer) => {
             const sheetMessage: CreateAISheetMessage = JSON.parse(message.toString());
             const serverStatus = sheetMessage.status;
             if(serverStatus != clientStatus) {
-                this.send(sheetMessage, res,channel);
+                this.finishTransaction(sheetMessage, res,channel);
             }
         }
         await this.connection.subscribe(channel, progressHandler, true);
@@ -92,7 +91,7 @@ export class ProgressService {
         await this.connection.unsubscribe(channel)
     }
 
-    private async check(videoId: string): Promise<number>{
+    private async checkProgressStatus(videoId: string): Promise<number>{
         return Number(await this.checkConnection.get(videoId))
     }
 }

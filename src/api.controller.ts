@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Header, Headers, Logger, Param, Post, Query, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Header, Headers, Logger, Param, Post, Query, Req, Res, UsePipes } from '@nestjs/common';
 import { HistoryService } from './domain/history/history.service';
 import { RecommendationService } from './domain/recommendation/recommendation.service';
 import { UserService } from './domain/user/user.service';
@@ -6,6 +6,8 @@ import { PostSignUpResponse } from './types/api/response/PostSignUp.response';
 import { Response } from 'express';
 import { SheetService } from './domain/sheet/sheet.service';
 import { PostCreateAISheetRequest } from './types/api/request/PostCreateAISheet.request';
+import { ParseIntPipe } from '@nestjs/common';
+import { AISheetPipe } from './validation/aisheet.pipe';
 @Controller('v1') 
 export class ApiController {
   constructor(private recommendationService: RecommendationService,
@@ -23,6 +25,7 @@ export class ApiController {
   }
 
   @Post('aisheet')
+  @UsePipes(new AISheetPipe())
   async createAISheet(@Body() createSheetRequest: PostCreateAISheetRequest, @Res() res: Response) {
     await this.sheetService.createAISheet(createSheetRequest, res);
   }
