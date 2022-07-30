@@ -1,5 +1,5 @@
 export async function sleep(ms) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    }).catch(function() {});
-}   
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  }).catch(function () {});
+}

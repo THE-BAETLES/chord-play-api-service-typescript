@@ -1,5 +1,5 @@
 export interface PostSignUpRequest {
-    accessToken: string;
-    nickname: string;
-    role: string;
+  accessToken: string;
+  nickname: string;
+  role: string;
 }

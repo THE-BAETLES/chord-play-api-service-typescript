@@ -13,14 +13,15 @@ import { SheetModule } from './domain/sheet/sheet.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [configuration]}),
-      HttpModule,
-      RecommendationModule,
-      HistoryModule,
-      UserModule,
-      SqsModule,
-      ProgressModule,
-      SheetModule
+      load: [configuration],
+    }),
+    HttpModule,
+    RecommendationModule,
+    HistoryModule,
+    UserModule,
+    SqsModule,
+    ProgressModule,
+    SheetModule,
   ],
   controllers: [ApiController],
   providers: [],

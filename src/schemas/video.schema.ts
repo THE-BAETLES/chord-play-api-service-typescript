@@ -1,34 +1,34 @@
-import {Document} from "mongoose"
-import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose"
-import { ObjectId } from "mongoose";
+import { Document } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ObjectId } from 'mongoose';
 export type VideoDocument = Video & Document;
 
 @Schema()
 export class Video {
-    @Prop({type: String, required: true})
-    _id: string;
+  @Prop({ type: String, required: true })
+  _id: string;
 
-    thumbnail_path: string;
+  thumbnail_path: string;
 
-    title: string;
+  title: string;
 
-    @Prop()
-    genre: string;
+  @Prop()
+  genre: string;
 
-    @Prop()
-    singer: string;
+  @Prop()
+  singer: string;
 
-    @Prop()
-    tags: string[];
+  @Prop()
+  tags: string[];
 
-    @Prop()
-    length: number;
+  @Prop()
+  length: number;
 
-    @Prop()
-    difficulty_avg: number;
+  @Prop()
+  difficulty_avg: number;
 
-    @Prop()
-    play_count: number;
+  @Prop()
+  play_count: number;
 }
 
 export const VideoSchema = SchemaFactory.createForClass(Video);

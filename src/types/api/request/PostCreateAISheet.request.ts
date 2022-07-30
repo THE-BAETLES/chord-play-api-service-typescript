@@ -1,4 +1,4 @@
 export interface PostCreateAISheetRequest {
-    videoId: string;
-    status: number;
+  videoId: string;
+  status: number;
 }

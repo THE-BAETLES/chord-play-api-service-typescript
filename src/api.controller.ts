@@ -7,20 +7,21 @@ import { Response } from 'express';
 import { SheetService } from './domain/sheet/sheet.service';
 import { PostCreateAISheetRequest } from './types/api/request/PostCreateAISheet.request';
 import { AISheetPipe } from 'src/validation/aisheet.pipe';
-@Controller('v1') 
+@Controller('v1')
 export class ApiController {
-  constructor(private recommendationService: RecommendationService,
-     private userService: UserService,
-     private historyService: HistoryService,
-     private sheetService: SheetService
-     ) {}
+  constructor(
+    private recommendationService: RecommendationService,
+    private userService: UserService,
+    private historyService: HistoryService,
+    private sheetService: SheetService,
+  ) {}
 
   @Post('signup')
-  async signUp(): Promise<PostSignUpResponse>{
+  async signUp(): Promise<PostSignUpResponse> {
     return {
       status: 'FAILED',
-      payload: 'EXCEPTION'
-    }
+      payload: 'EXCEPTION',
+    };
   }
 
   @Post('aisheet')
@@ -30,9 +31,9 @@ export class ApiController {
   }
 
   @Get('watch-history')
-  async watchHistory(@Headers('Authorization') accessToken: string ,@Query('offset') offset: number, @Query('limit') limit: number) {
+  async watchHistory(@Headers('Authorization') accessToken: string, @Query('offset') offset: number, @Query('limit') limit: number) {
     const user_id = await this.userService.getUserId(accessToken);
-    return this.historyService.findSubset(user_id, offset, limit)
+    return this.historyService.findSubset(user_id, offset, limit);
   }
 
   @Get('recommendation')
@@ -41,5 +42,4 @@ export class ApiController {
     const recommendationResults = await this.recommendationService.getRecommendation(user_id, offset, limit);
     return recommendationResults;
   }
-
 }

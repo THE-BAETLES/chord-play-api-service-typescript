@@ -4,19 +4,15 @@ import { VideoDocument } from 'src/schemas/video.schema';
 
 @Injectable()
 export class VideoService {
-    constructor(@Inject('VIDEO_MODEL') private videoModel: Model<VideoDocument>){
-    }
+  constructor(@Inject('VIDEO_MODEL') private videoModel: Model<VideoDocument>) {}
 
-    async create(){
+  async create() {}
 
-    }
+  async findAll(): Promise<VideoDocument[]> {
+    return this.videoModel.find().exec();
+  }
 
-    async findAll(): Promise<VideoDocument[]>{
-        return this.videoModel.find().exec();
-    }
-
-    async findById(idList: string[]): Promise<VideoDocument[]>{
-        return this.videoModel.find().where('_id').in(idList).exec();
-    }
-
+  async findById(idList: string[]): Promise<VideoDocument[]> {
+    return this.videoModel.find().where('_id').in(idList).exec();
+  }
 }

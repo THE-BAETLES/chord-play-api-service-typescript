@@ -1,5 +1,4 @@
-
 export interface PostSignUpResponse {
-    status: 'SUCCESS' | 'FAILED';
-    payload: 'EXCEPTION'
+  status: 'SUCCESS' | 'FAILED';
+  payload: 'EXCEPTION';
 }

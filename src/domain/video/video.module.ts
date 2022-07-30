@@ -4,8 +4,8 @@ import { VideoProvider } from './video.provider';
 import { VideoService } from './video.service';
 
 @Module({
-    imports: [MongoModule],
-    providers: [VideoService, ...VideoProvider],
-    exports: [VideoService, ...VideoProvider]
+  imports: [MongoModule],
+  providers: [VideoService, ...VideoProvider],
+  exports: [VideoService, ...VideoProvider],
 })
 export class VideoModule {}

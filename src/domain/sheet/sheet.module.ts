@@ -6,10 +6,8 @@ import { SqsModule } from 'src/infra/sqs/sqs.module';
 import { MongoModule } from 'src/database/mongo/mongo.module';
 import { ProgressModule } from '../progress/progress.module';
 @Module({
-    imports: [VideoModule, SqsModule, MongoModule, ProgressModule],
-    providers: [SheetService, ...sheetProvider],
-    exports: [SheetService, ...sheetProvider]
-
+  imports: [VideoModule, SqsModule, MongoModule, ProgressModule],
+  providers: [SheetService, ...sheetProvider],
+  exports: [SheetService, ...sheetProvider],
 })
-export class SheetModule {
-}
+export class SheetModule {}
