@@ -24,7 +24,7 @@ export class ApiController {
     };
   }
 
-  @Post('aisheet')
+  @Post('/sheets/ai')
   @UsePipes(new AISheetPipe())
   async createAISheet(@Body() createSheetRequest: PostCreateAISheetRequest, @Res() res: Response) {
     await this.sheetService.createAISheet(createSheetRequest, res);
