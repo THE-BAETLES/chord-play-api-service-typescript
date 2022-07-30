@@ -37,8 +37,9 @@ export class SheetService {
     const { videoId, status } = createAIRequest;
     const clientStatus = status;
     await this.createAISheetSchema(createAIRequest);
-    await this.sqsService.sendCreateSheetMessage(createAIRequest);
-
+    await this.sqsService.sendCreateSheetMessage({
+      videoId: videoId,
+    });
     await this.progressService.attachProgressHandlerToChannel(videoId, clientStatus, res);
     await this.progressService.startPolling(createAIRequest, res, videoId);
   }

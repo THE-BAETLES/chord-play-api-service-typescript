@@ -24,7 +24,6 @@ describe('SqsService', () => {
   it('Sqs message send test', async () => {
     expect(service).toBeDefined;
     await service.sendCreateSheetMessage({
-      status: 0,
       videoId: 'asdfasdfsaf',
     });
   });
