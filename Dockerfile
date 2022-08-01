@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:16
 LABEL maintainer "chobe1<chobe0719@gmail.com>"
 LABEL serverType="Chord play api test server"
 
@@ -11,7 +11,8 @@ RUN npm i -g @nestjs/cli
 RUN npm install
 
 COPY . .
+RUN npm run build
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start:container:prod"]

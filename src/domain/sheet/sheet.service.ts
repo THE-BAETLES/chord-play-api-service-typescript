@@ -22,6 +22,12 @@ export class SheetService {
 
   private async createAISheetSchema(createAIRequest: PostCreateAISheetRequest) {
     const videoId = createAIRequest.videoId;
+    // TODO: Check is data exist already
+    const video = await this.sheet.find({ video_id: videoId }).exec();
+
+    // If data already exist continue
+    if (video.length !== 0) return;
+
     const createdAISheet = new this.sheet({ video_id: videoId });
     await createdAISheet.save();
   }
@@ -34,12 +40,17 @@ export class SheetService {
      * 4. sheet_data will create by inference server u don`t care about that on this server
      * 추후에 알림 서비스를 사용하는 것도 고려해봐야함 (ex. FCM)
      */
+
+    console.log(createAIRequest);
     const { videoId, status } = createAIRequest;
     const clientStatus = status;
     await this.createAISheetSchema(createAIRequest);
+    await this.progressService.checkAndSend(createAIRequest, res, videoId);
+
     await this.sqsService.sendCreateSheetMessage({
       videoId: videoId,
     });
+
     await this.progressService.attachProgressHandlerToChannel(videoId, clientStatus, res);
     await this.progressService.startPolling(createAIRequest, res, videoId);
   }

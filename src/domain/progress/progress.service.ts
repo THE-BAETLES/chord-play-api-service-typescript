@@ -19,7 +19,7 @@ export class ProgressService {
     @Inject(SHEET_DATA_MODEL) private sheetData: Model<SheetDataDocument>,
   ) {}
 
-  private async checkAndSend(createAIRequest: PostCreateAISheetRequest, res: Response, channel: string) {
+  async checkAndSend(createAIRequest: PostCreateAISheetRequest, res: Response, channel: string) {
     const { videoId, status } = createAIRequest;
     const progressStatus = await this.checkProgressStatus(createAIRequest.videoId);
     if (progressStatus != status) {
@@ -47,13 +47,11 @@ export class ProgressService {
   s;
   async startPolling(createAIRequest: PostCreateAISheetRequest, res: Response, channel: string) {
     await this.checkAndSend(createAIRequest, res, channel);
-
     this.timer = setTimeout(async () => {
       await this.checkAndSend(createAIRequest, res, channel);
       res.status(200).send({
         status: createAIRequest.status,
       });
-      resolve;
     }, 10000);
   }
 
@@ -89,8 +87,6 @@ export class ProgressService {
 
   private async off(channel: string) {
     await this.connection.unsubscribe(channel);
-    await this.connection.disconnect();
-    await this.checkConnection.disconnect();
   }
 
   private async checkProgressStatus(videoId: string): Promise<number> {
