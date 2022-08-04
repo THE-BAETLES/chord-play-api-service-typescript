@@ -16,7 +16,7 @@ export class RecommendationController {
     summary: '특정 유저에 대한 추천 목록 가져오기',
     description: '특정 유저에 대한 추천 목록을 가져옵니다 [offset, offset+limit -1] 범위의 데이터를 가져옵니다',
   })
-  @ApiCreatedResponse({ description: '악보 추천 응답 데이터입니다' })
+  @ApiCreatedResponse({ description: '악보 추천 응답 데이터입니다', type: GetRecommendationVideoResponse })
   async getRecommendation(
     @Headers('Authorization') accessToken: string,
     @Query('offset') offset: number,
