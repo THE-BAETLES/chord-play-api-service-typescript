@@ -1,7 +1,10 @@
 import { SheetDataDocument } from 'src/schemas/sheetData.schema';
-import { SheetDocument } from 'src/schemas/sheet.schema';
+import { Sheet, SheetDocument } from 'src/schemas/sheet.schema';
 import { ApiProperty } from '@nestjs/swagger';
+import { SheetService } from 'src/domain/sheet/sheet.service';
+import { PickType } from '@nestjs/swagger';
+import { PublicKeyType } from 'aws-sdk/clients/kms';
 export class PutSheetRequest {
-  @ApiProperty({ description: '디지털 악보 데이터 수정 요청' })
-  sheet: SheetDocument;
+  @ApiProperty()
+  sheetInfo: Sheet;
 }

@@ -3,7 +3,7 @@ import { Connection, Model } from 'mongoose';
 import { WatchHistoryDocument } from 'src/schemas/watch_history.schema';
 
 @Injectable()
-export class HistoryService {
+export class WatchHistoryService {
   constructor(@Inject('WATCH_HISTORY_MODEL') private historyModel: Model<WatchHistoryDocument>) {}
 
   async create() {}

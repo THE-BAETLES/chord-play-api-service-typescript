@@ -58,7 +58,7 @@ export class SheetController {
     description: '현재 악보 생성 진행상황을 반환합니다. \n Status 는 총 4단계로 나뉩니다.',
     type: PostCreateAISheetResponse,
   })
-  async createAISheet(@Body() createAiSheetRequest: PostCreateAISheetRequest, @Res() res: Response) {
+  async createAISheet(@Headers('Authorization') accessToken: string, @Body() createAiSheetRequest: PostCreateAISheetRequest, @Res() res: Response) {
     await this.sheetService.createAISheet(createAiSheetRequest, res);
   }
 }
