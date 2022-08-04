@@ -1,9 +1,10 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { GetRecommendationResponse } from 'src/types/api/response/GetRecommendation.response';
 import { RecommendationConfigType } from 'src/configs/recommendation.config';
 import { VideoDocument } from 'src/schemas/video.schema';
+import { GetRecommendationResponse } from 'src/types/api/response/recommendation/GetRecommendation.response';
+import { GetRecommendationVideoResponse } from 'src/types/api/response/recommendation/GetRecommendationVideo.response';
 import { VideoService } from '../video/video.service';
 @Injectable()
 export class RecommendationService {

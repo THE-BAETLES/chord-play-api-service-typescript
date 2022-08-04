@@ -3,7 +3,6 @@ import { UserService } from '../user/user.service';
 import { RecommendationService } from './recommendation.service';
 import { Headers } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { VideoDocument } from 'src/schemas/video.schema';
 import { GetRecommendationVideoResponse } from 'src/types/api/response/recommendation/GetRecommendationVideo.response';
 
 @Controller('v1/recommendation')
