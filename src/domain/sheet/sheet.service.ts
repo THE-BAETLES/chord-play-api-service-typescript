@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Response } from 'express';
 import { Model } from 'mongoose';
 import { SheetDocument } from 'src/schemas/sheet.schema';
@@ -47,6 +47,7 @@ export class SheetService {
     await this.createAISheetSchema(createAIRequest);
     await this.progressService.checkAndSend(createAIRequest, res, videoId);
 
+    Logger.log('Send Message');
     await this.sqsService.sendCreateSheetMessage({
       videoId: videoId,
     });
