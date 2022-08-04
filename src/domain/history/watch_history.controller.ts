@@ -2,6 +2,7 @@ import { Controller, Get, Head, Query } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { WatchHistoryService } from './watch_history.service';
 import { Headers } from '@nestjs/common';
+import { GetWatchHistoryResponse } from 'src/types/api/response/watch_history/GetWatchHistory.response';
 
 @Controller('v1/watch-history')
 @ApiTags('영상 재생 히스토리 API')
@@ -13,6 +14,6 @@ export class WatchHistoryController {
     summary: '특정 유저에 대한 영상 재생 히스토리 목록 가져오기',
     description: '특정 유저에 대한 영상 재생 히스토리 목록을 가져옵니다  [offset, offset+limit -1] 범위의 데이터를 가져옵니다',
   })
-  @ApiCreatedResponse({ description: '영상 재생 히스토리 데이터입니다' })
-  async getWatchHistory(@Headers('Authorization') accessToken: string, @Query('offset') offset, @Query('limit') limit) {}
+  @ApiCreatedResponse({ description: '영상 재생 히스토리 데이터입니다', type: GetWatchHistoryResponse })
+  async getWatchHistory(@Headers('Authorization') accessToken: string, @Query('offset') offset: string, @Query('limit') limit: string) {}
 }

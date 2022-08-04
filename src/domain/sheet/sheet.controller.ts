@@ -13,6 +13,7 @@ import 'reflect-metadata';
 import { access } from 'fs';
 import { PutSheetRequest } from 'src/types/api/request/sheet/PutSheet.request';
 import { PutSheetResponse } from 'src/types/api/response/sheet/PutSheet.response';
+import { SheetData } from 'src/schemas/sheetData.schema';
 
 @Controller('v1/sheets')
 @ApiTags('악보 API')
@@ -21,18 +22,18 @@ export class SheetController {
 
   @Get('/data/:sheetId')
   @ApiOperation({ summary: '특정 악보 데이터 가져오기', description: '특정 악보 데이터를 가져옵니다' })
-  @ApiCreatedResponse({})
-  async getSheetData() {}
+  @ApiCreatedResponse({ description: '특정 악보에 대한 데이터입니다', type: SheetData })
+  async getSheetData(@Headers('Authorization') accessToken: string, @Param('sheetId') sheetId: string) {}
 
   @Get()
   @ApiOperation({ summary: '모든 악보 정보 가져오기', description: '모든 악보 정보를 가져옵니다' })
   @ApiCreatedResponse({})
-  async getAllSheet() {
+  async getAllSheet(@Headers('Authorization') accessToken: string) {
     console.log('asdfasdf');
   }
 
   @Get('/:sheetId')
-  @ApiOperation({ summary: '특정 악보 정보 가져오기', description: '특정 악보 정보를 가져옵니다.' })
+  @ApiOperation({ summary: '특정 악보 정보 가져오기', description: '특정 악보 정보를 가져옵니다. 추후에 수정될 예정입니다.' })
   @ApiCreatedResponse({})
   async getSheet(@Param('sheetId') sheetId: string, @Headers('Authorization') accessToken: string) {}
 
@@ -51,7 +52,7 @@ export class SheetController {
   @ApiCreatedResponse({ description: '악보 생성 응답 데이터입니다.', type: PostCreateSheetResponse })
   async createSheet(@Headers('Authorization') accessToken: string, @Body() createSheetRequest: PostCreateSheetRequest) {}
 
-  @Post('/sheets/ai')
+  @Post('ai')
   @UsePipes(new AISheetPipe())
   @ApiOperation({ summary: '인공지능 악보 생성하기', description: '인공지능 악보 생성 요청을 보냅니다.' })
   @ApiCreatedResponse({
