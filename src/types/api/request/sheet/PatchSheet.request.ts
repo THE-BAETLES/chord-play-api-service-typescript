@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { SheetService } from 'src/domain/sheet/sheet.service';
 import { PickType } from '@nestjs/swagger';
 import { PublicKeyType } from 'aws-sdk/clients/kms';
-export class PutSheetRequest {
+export class PatchSheetRequest {
   @ApiProperty()
   sheetInfo: Sheet;
 }

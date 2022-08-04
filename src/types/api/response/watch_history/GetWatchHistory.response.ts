@@ -1,9 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Video } from 'src/schemas/video.schema';
+import { Response } from '../response';
 
-export class GetWatchHistoryResponse {
-  @ApiProperty({ description: '곡의 개수입니다.' })
-  number: number;
+export class GetWatchHistoryResponse extends Response {
   @ApiProperty({ description: '최근 들은 곡의 목록입니다', type: [Video] })
-  watch_history_list: Video[];
+  data: Video[];
 }

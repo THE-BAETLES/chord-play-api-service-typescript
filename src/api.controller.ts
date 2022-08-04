@@ -6,7 +6,7 @@ import { Response } from 'express';
 import { SheetService } from './domain/sheet/sheet.service';
 import { AISheetPipe } from 'src/validation/aisheet.pipe';
 import { ApiCreatedResponse, ApiOperation } from '@nestjs/swagger';
-import { PostCreateAISheetRequest } from './types/api/request/sheet/PostCreateAISheet.request';
+import { PostAISheetRequest } from './types/api/request/sheet/PostAISheet.request';
 @Controller('v1')
 export class ApiController {
   constructor(

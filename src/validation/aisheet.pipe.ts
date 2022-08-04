@@ -1,9 +1,9 @@
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
-import { PostCreateAISheetRequest } from 'src/types/api/request/sheet/PostCreateAISheet.request';
+import { PostAISheetRequest } from 'src/types/api/request/sheet/PostAISheet.request';
 
 @Injectable()
-export class AISheetPipe implements PipeTransform<PostCreateAISheetRequest, PostCreateAISheetRequest> {
-  transform(value: PostCreateAISheetRequest, metadata: ArgumentMetadata): PostCreateAISheetRequest {
+export class AISheetPipe implements PipeTransform<PostAISheetRequest, PostAISheetRequest> {
+  transform(value: PostAISheetRequest, metadata: ArgumentMetadata): PostAISheetRequest {
     return {
       videoId: value.videoId,
       status: Number(value.status),

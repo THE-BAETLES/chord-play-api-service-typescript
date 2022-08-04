@@ -8,8 +8,8 @@ import { resolve } from 'path';
 import { SUBSCRIBE_PROGRESS_CONNECTION } from './progress.provider';
 import { CHECK_PROGRESS_CONNECTION } from './progress.provider';
 import { SHEET_DATA_MODEL } from '../sheet/sheet.provider';
-import { PostCreateAISheetRequest } from 'src/types/api/request/sheet/PostCreateAISheet.request';
-import { PostCreateAISheetResponse } from 'src/types/api/response/sheet/PostCreateAISheet.response';
+import { PostAISheetResponse } from 'src/types/api/response/sheet/PostAISheet.response';
+import { PostAISheetRequest } from 'src/types/api/request/sheet/PostAISheet.request';
 @Injectable()
 export class ProgressService {
   private timer;
@@ -19,7 +19,7 @@ export class ProgressService {
     @Inject(SHEET_DATA_MODEL) private sheetData: Model<SheetDataDocument>,
   ) {}
 
-  async checkAndSend(createAIRequest: PostCreateAISheetRequest, res: Response, channel: string) {
+  async checkAndSend(createAIRequest: PostAISheetRequest, res: Response, channel: string) {
     const { videoId, status } = createAIRequest;
     const progressStatus = await this.checkProgressStatus(createAIRequest.videoId);
     if (progressStatus != status) {
@@ -45,7 +45,7 @@ export class ProgressService {
     );
   }
   s;
-  async startPolling(createAIRequest: PostCreateAISheetRequest, res: Response, channel: string) {
+  async startPolling(createAIRequest: PostAISheetRequest, res: Response, channel: string) {
     await this.checkAndSend(createAIRequest, res, channel);
     this.timer = setTimeout(async () => {
       await this.checkAndSend(createAIRequest, res, channel);
@@ -69,7 +69,7 @@ export class ProgressService {
   // 3. 네이밍이 정확하게 메소드가 하는 역할을 잘 표현하고 있는지
   // 4. imperative: 명령한다? declartive: 다른 엔지니어가 볼때 바로 이해할수 있게 하는 것 (어떻게 how)를 추상화시킴 원하는 것을 주세요
   // 다른 사람이 처음봤을때 이해할수있도록 네이밍하는게 중요함 어떻게 동작하는지는 중요하지 않음
-  private async finishTransaction(message: CreateAISheetMessage | PostCreateAISheetResponse, res: Response, channel: string) {
+  private async finishTransaction(message: CreateAISheetMessage | PostAISheetResponse, res: Response, channel: string) {
     this.stop(channel);
     res.status(200).send(message);
   }

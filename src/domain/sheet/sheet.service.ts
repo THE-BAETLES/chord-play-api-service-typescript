@@ -8,7 +8,7 @@ import { ProgressService } from '../progress/progress.service';
 import { SHEET_MODEL } from './sheet.provider';
 import { SHEET_DATA_MODEL } from './sheet.provider';
 import { SqsService } from 'src/infra/sqs/sqs.service';
-import { PostCreateAISheetRequest } from 'src/types/api/request/sheet/PostCreateAISheet.request';
+import { PostAISheetRequest } from 'src/types/api/request/sheet/PostAISheet.request';
 
 @Injectable()
 export class SheetService {
@@ -20,7 +20,7 @@ export class SheetService {
     private sqsService: SqsService,
   ) {}
 
-  private async createAISheetSchema(createAIRequest: PostCreateAISheetRequest) {
+  private async createAISheetSchema(createAIRequest: PostAISheetRequest) {
     const videoId = createAIRequest.videoId;
     // TODO: Check is data exist already
     const video = await this.sheet.find({ video_id: videoId }).exec();
@@ -32,7 +32,7 @@ export class SheetService {
     await createdAISheet.save();
   }
 
-  async createAISheet(createAIRequest: PostCreateAISheetRequest, res: Response) {
+  async createAISheet(createAIRequest: PostAISheetRequest, res: Response) {
     /**
      * CreateAiSheet Business logic
      * 2. if sheet_data exist return sheet_data as payload with status 3
