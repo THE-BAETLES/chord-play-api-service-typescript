@@ -4,11 +4,11 @@ import { Model } from 'mongoose';
 import { SheetDocument } from 'src/schemas/sheet.schema';
 import { SheetDataDocument } from 'src/schemas/sheetData.schema';
 import { VideoDocument } from 'src/schemas/video.schema';
-import { PostCreateAISheetRequest } from 'src/types/api/request/PostCreateAISheet.request';
 import { ProgressService } from '../progress/progress.service';
 import { SHEET_MODEL } from './sheet.provider';
 import { SHEET_DATA_MODEL } from './sheet.provider';
 import { SqsService } from 'src/infra/sqs/sqs.service';
+import { PostCreateAISheetRequest } from 'src/types/api/request/sheet/PostCreateAISheet.request';
 
 @Injectable()
 export class SheetService {

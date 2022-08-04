@@ -1,5 +1,5 @@
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
-import { PostCreateAISheetRequest } from 'src/types/api/request/PostCreateAISheet.request';
+import { PostCreateAISheetRequest } from 'src/types/api/request/sheet/PostCreateAISheet.request';
 
 @Injectable()
 export class AISheetPipe implements PipeTransform<PostCreateAISheetRequest, PostCreateAISheetRequest> {

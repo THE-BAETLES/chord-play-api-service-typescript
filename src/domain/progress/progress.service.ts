@@ -1,15 +1,15 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { RedisClientType } from '@redis/client';
-import { PostCreateAISheetRequest } from 'src/types/api/request/PostCreateAISheet.request';
 import { Response } from 'express';
 import { Model } from 'mongoose';
 import { SheetDataDocument } from 'src/schemas/sheetData.schema';
-import { PostCreateAISheetResponse } from 'src/types/api/response/PostCreateAISheet.response';
 import { CreateAISheetMessage } from 'src/message/redis/createAISheet.message';
 import { resolve } from 'path';
 import { SUBSCRIBE_PROGRESS_CONNECTION } from './progress.provider';
 import { CHECK_PROGRESS_CONNECTION } from './progress.provider';
 import { SHEET_DATA_MODEL } from '../sheet/sheet.provider';
+import { PostCreateAISheetRequest } from 'src/types/api/request/sheet/PostCreateAISheet.request';
+import { PostCreateAISheetResponse } from 'src/types/api/response/sheet/PostCreateAISheet.response';
 @Injectable()
 export class ProgressService {
   private timer;

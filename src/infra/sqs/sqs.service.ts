@@ -1,7 +1,6 @@
 import { AddPermissionCommand, SendMessageCommand, SQSClient } from '@aws-sdk/client-sqs';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { SheetCreateMessage } from 'src/message/SheetCreateMessage';
-import { PostCreateAISheetRequest } from 'src/types/api/request/PostCreateAISheet.request';
 import { INFERENCE_SQS_CLIENT } from './sqs.provider';
 export const CREATE_SHEET_MESSAGE_GROUP_ID = 'CreateSheetMessage';
 @Injectable()
@@ -16,6 +15,7 @@ export class SqsService {
       MessageDeduplicationId: `${videoId}`,
       MessageSystemAttributes: {},
     });
+    Logger.log('send!');
     await this.client.send(command);
   }
 }

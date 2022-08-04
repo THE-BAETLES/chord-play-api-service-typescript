@@ -9,6 +9,8 @@ export class RecommendationController {
 
   @Get()
   async getRecommendation(@Headers('Authorization') accessToken: string, @Query('offset') offset: number, @Query('limit') limit: number): Promise<any> {
+    const userId = await this.userService.getUserId(accessToken);
+    const recommendationResults = await this.recommendation.getRecommendation(userId, offset, limit);
     return 0;
   }
 }

@@ -24,4 +24,12 @@ export const sheetProvider = [
     },
     inject: [MONGO_CONNECTION],
   },
+  {
+    provide: 'TEST_DECO',
+    useFactory: () => {
+      return function <T>(target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<T>) {
+        console.log(Reflect.getMetadataKeys(target, propertyKey));
+      };
+    },
+  },
 ];
