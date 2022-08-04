@@ -11,6 +11,8 @@ import { PostCreateSheetRequest } from 'src/types/api/request/sheet/PostCreateSh
 import { createParamDecorator } from '@nestjs/common';
 import 'reflect-metadata';
 import { access } from 'fs';
+import { PutSheetRequest } from 'src/types/api/request/sheet/PutSheet.request';
+import { PutSheetResponse } from 'src/types/api/response/sheet/PutSheet.response';
 
 @Controller('v1/sheets')
 @ApiTags('악보 API')
@@ -41,8 +43,8 @@ export class SheetController {
 
   @Put('/:sheetId')
   @ApiOperation({ summary: '특정 악보 정보 수정하기', description: '특정 악보 정보를 수정합니다.' })
-  @ApiCreatedResponse({ description: '악보 정보 수정 응답 데이터입니다.' })
-  async updateSheet(@Headers('Authorization') accessToken: string) {}
+  @ApiCreatedResponse({ description: '악보 정보 수정 응답 데이터입니다.', type: PutSheetResponse })
+  async updateSheet(@Headers('Authorization') accessToken: string, @Body() updateSheetRequest: PutSheetRequest) {}
 
   @Post()
   @ApiOperation({ summary: '특정 악보 정보 생성하기', description: '특정 유저가 만든 악보 정보를 생성합니다.' })
