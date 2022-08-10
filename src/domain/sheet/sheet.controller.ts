@@ -1,11 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Res, UsePipes, Headers, Logger, Inject, Put, Header } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Post, Res, UsePipes, Headers, Logger, Inject, Put, Header, Query, Patch } from '@nestjs/common';
+import { ApiCreatedResponse, ApiExtension, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { AISheetPipe } from 'src/validation/aisheet.pipe';
 import { UserService } from '../user/user.service';
 import { SheetService } from './sheet.service';
 import { Response } from 'express';
 import { GetSheetDataResponse } from 'src/types/api/response/sheet/GetSheetData.response';
-import { GetAllSheetResponse } from 'src/types/api/response/sheet/GetAllSheet.response';
+import { GetConditionSheetResponse } from 'src/types/api/response/sheet/GetConditionSheet.response';
 import { GetSheetResponse } from 'src/types/api/response/sheet/GetSheet.response';
 import { DeleteSheetResponse } from 'src/types/api/response/sheet/DeleteSheet.response';
 import { PatchSheetResponse } from 'src/types/api/response/sheet/PatchSheet.response';
@@ -26,11 +26,28 @@ export class SheetController {
   async getSheetData(@Headers('Authorization') accessToken: string, @Param('sheetId') sheetId: string) {}
 
   @Get()
-  @ApiOperation({ summary: '모든 악보 정보 가져오기', description: '모든 악보 정보를 가져옵니다' })
-  @ApiCreatedResponse({ description: '모든 악보에 대한 데이터입니다.', type: GetAllSheetResponse })
+  @ApiOperation({ summary: '특정 유저에 대한 모든 악보 정보 가져오기', description: '모든 악보 정보를 가져옵니다' })
+  @ApiCreatedResponse({ description: '모든 악보에 대한 데이터입니다.', type: GetConditionSheetResponse })
   async getAllSheet(@Headers('Authorization') accessToken: string) {
     console.log('asdfasdf');
   }
+
+  @Get()
+  async getSheetByVideoId(@Headers('Authorization') accessToken: string, @Query('videoId') videoId: string) {}
+
+  @Get()
+  @ApiOperation({
+    summary: '특정 조건에 대한 모든 악보 정보',
+    description: '특정 조건에 만족하는 모든 악보정보를 가져옵니다. query string 이 존재하지 않을 시에 특정 유저가 소유하고 있는 모든 악보 정보를 반환합니다.',
+  })
+  @ApiQuery({
+    name: 'videoId',
+    type: String,
+    description: '특정 비디오에 대한 악보를 가져올 경우 사용합니다. [Optional]',
+    required: false,
+  })
+  @ApiCreatedResponse({ description: '특정 조건에 대한 악보 데이터 입니다.', type: GetConditionSheetResponse })
+  async getSheetByUserId(@Headers('Authorization') accessToken: string) {}
 
   @Get('/:sheetId')
   @ApiOperation({ summary: '특정 악보 정보 가져오기', description: '특정 악보 정보를 가져옵니다. 추후에 수정될 예정입니다.' })
@@ -42,7 +59,7 @@ export class SheetController {
   @ApiCreatedResponse({ description: '삭제된 악보 데이터 정보입니다.', type: DeleteSheetResponse })
   async deleteSheet(@Param('sheetId') sheetId: string) {}
 
-  @Put('/:sheetId')
+  @Patch('/:sheetId')
   @ApiOperation({ summary: '특정 악보 정보 수정하기', description: '특정 악보 정보를 수정합니다.' })
   @ApiCreatedResponse({ description: '악보 정보 수정 응답 데이터입니다.', type: PatchSheetResponse })
   async updateSheet(@Headers('Authorization') accessToken: string, @Body() updateSheetRequest: PatchSheetRequest) {}
@@ -63,18 +80,3 @@ export class SheetController {
     await this.sheetService.createAISheet(createAiSheetRequest, res);
   }
 }
-
-const multiParam = <T extends { [key: string]: string }>(dict: T): ParameterDecorator => {
-  return (target: Object, propertyKey: string | symbol, parameterIndex: number): void => {
-    return;
-  };
-};
-
-const paramConverter = <T extends { [key: string]: string }>(dict: T): ParameterDecorator[] => {
-  const ret = [];
-
-  for (let i in dict) {
-  }
-
-  return [];
-};

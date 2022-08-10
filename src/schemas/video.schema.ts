@@ -37,6 +37,10 @@ export class Video {
   difficulty_avg: number;
 
   @Prop()
+  @ApiProperty({ description: '특정 비디오에 연관된 악보의 개수입니다' })
+  sheet_conut: number;
+
+  @Prop()
   @ApiProperty({ description: '비디오가 재생된 총 횟수를 기록합니다.' })
   play_count: number;
 }

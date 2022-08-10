@@ -6,5 +6,5 @@ import { PickType } from '@nestjs/swagger';
 import { PublicKeyType } from 'aws-sdk/clients/kms';
 export class PatchSheetRequest {
   @ApiProperty()
-  sheetInfo: Sheet;
+  sheet: Sheet;
 }
