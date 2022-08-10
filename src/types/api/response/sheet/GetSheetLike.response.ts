@@ -6,5 +6,5 @@ import { Response } from '../response';
 @Schema()
 export class GetSheetLikeResponse extends Response {
   @ApiProperty({ type: [Sheet] })
-  data: Sheet;
+  data: Sheet[];
 }

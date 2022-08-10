@@ -14,11 +14,39 @@ import { PostAISheetResponse } from 'src/types/api/response/sheet/PostAISheet.re
 import { PostSheetResponse } from 'src/types/api/response/sheet/PostSheet.response';
 import { PostSheetRequest } from 'src/types/api/request/sheet/PostSheet.request';
 import { PostAISheetRequest } from 'src/types/api/request/sheet/PostAISheet.request';
+import { GetSheetLikeResponse } from 'src/types/api/response/sheet/GetSheetLike.response';
+import { PostSheetLikeRequest } from 'src/types/api/request/sheet/PostSheetLike.request';
+import { PostSheetLikeResponse } from 'src/types/api/response/sheet/PostSheetLike.response';
 
 @Controller('v1/sheets')
 @ApiTags('악보 API')
 export class SheetController {
   constructor(@Inject('TEST_DECO') Test, private sheetService: SheetService, private userService: UserService) {}
+
+  @Get('/my')
+  @ApiOperation({ summary: '내가 만든 악보 목록', description: '내 악보 목록을 가져옵니다.' })
+  @ApiCreatedResponse()
+  async getMySheet(@Headers('Authorization') accessToken: string, @Query('videoId') videoId: string) {}
+
+  @Get('/like')
+  @ApiOperation({ summary: '좋아요한 악보 목록', description: '좋아요한 악보 목록을 가져옵니다.' })
+  @ApiCreatedResponse({ description: '좋아요 악보 데이터입니다.', type: GetSheetLikeResponse })
+  async getLikeSheet(@Headers('Authorization') accessToken: string, @Query('videoId') videoId: string) {}
+
+  @Post('/like')
+  @ApiOperation({ summary: '좋아요 악보 추가', description: '좋아요한 악보를 추가합니다.' })
+  @ApiCreatedResponse({ type: PostSheetLikeResponse })
+  async createLikeSheet(@Headers('Authorization') accessToken: string, @Body() createLikeSheetBody: PostSheetLikeRequest) {}
+
+  @Delete('/like/:sheetId')
+  @ApiOperation({ summary: '좋아요 악보 삭제', description: '좋아요한 악보를 삭제합니다.' })
+  @ApiCreatedResponse({ type: PostSheetLikeResponse })
+  async deleteLikeSheet(@Headers('Authorization') accessToken: string, @Param('sheetId') sheetId: string) {}
+
+  @Get('/shared')
+  @ApiOperation({ summary: '공유된 악보 목록', description: '공유된 악보 목록을 가져옵니다.' })
+  @ApiCreatedResponse()
+  async getSharedSheetData(@Headers('Authorization') accessToken: string, @Query('videoId') videoId: string) {}
 
   @Get('/data/:sheetId')
   @ApiOperation({ summary: '특정 악보 데이터 가져오기', description: '특정 악보 데이터를 가져옵니다' })
