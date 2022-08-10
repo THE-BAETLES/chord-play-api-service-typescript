@@ -9,6 +9,7 @@ import { SqsModule } from './infra/sqs/sqs.module';
 import { ProgressModule } from './domain/progress/progress.module';
 import { SheetModule } from './domain/sheet/sheet.module';
 import { WatchHistoryModule } from './domain/history/watch_history.module';
+import { SearchModule } from './domain/search/search.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -22,6 +23,7 @@ import { WatchHistoryModule } from './domain/history/watch_history.module';
     SqsModule,
     ProgressModule,
     SheetModule,
+    SearchModule,
   ],
   controllers: [ApiController],
   providers: [],
