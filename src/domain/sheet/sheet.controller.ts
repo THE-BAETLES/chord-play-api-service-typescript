@@ -76,7 +76,6 @@ export class SheetController {
   })
   @ApiCreatedResponse({ description: '특정 조건에 대한 악보 데이터 입니다.', type: GetConditionSheetResponse })
   async getSheetByUserId(@Headers('Authorization') accessToken: string) {}
-
   @Get('/:sheetId')
   @ApiOperation({ summary: '특정 악보 정보 가져오기', description: '특정 악보 정보를 가져옵니다. 추후에 수정될 예정입니다.' })
   @ApiCreatedResponse({ description: '특정 조건에 맞는 악보 정보 데이터 입니다.', type: GetSheetResponse })
