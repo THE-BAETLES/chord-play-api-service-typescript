@@ -31,4 +31,10 @@ export class UserController {
   @ApiOperation({ summary: '유저 비디오 콜렉션', description: '특정 유저의 비디오 콜렉션 목록을 반환합니다.' })
   @ApiCreatedResponse({ description: '비디오 콜렉션 정보입니다.', type: GetUserVideoCollectionResponse })
   async getMyVideoCollection(@Headers('Authorization') accessToken: string) {}
+
+  @Get('/signup-favorite')
+  async getFavorite() {}
+
+  @Post('/signup-favorite')
+  async createFavorite() {}
 }
