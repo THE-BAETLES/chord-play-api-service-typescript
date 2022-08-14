@@ -1,11 +1,14 @@
 import { Body, Controller, Delete, Get, Headers, Param, Post } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PostUserRequest } from 'src/types/api/request/user/PostUser.request';
+import { PostUserSignUpFavoriteRequest } from 'src/types/api/request/user/PostUserSignUpFavorite.request';
 import { PostUserVideoCollectionRequest } from 'src/types/api/request/user/PostUserVideoCollection.request';
 import { DeleteSheetResponse } from 'src/types/api/response/sheet/DeleteSheet.response';
 import { GetUserSheetCollectionResponse } from 'src/types/api/response/user/GetUserSheetCollection.response';
+import { GetUserSignUpFavoriteResponse } from 'src/types/api/response/user/GetUserSignUpFavorite.response';
 import { GetUserVideoCollectionResponse } from 'src/types/api/response/user/GetUserVideoCollection.response';
 import { PostUserResponse } from 'src/types/api/response/user/PostUser.response';
+import { PostUserSignUpFavoriteResponse } from 'src/types/api/response/user/PostUserSignUpFavorite.response';
 import { PostUserVideoCollectionResponse } from 'src/types/api/response/user/PostUserVideoCollection.response';
 
 @Controller('v1/user')
@@ -33,8 +36,12 @@ export class UserController {
   async getMyVideoCollection(@Headers('Authorization') accessToken: string) {}
 
   @Get('/signup-favorite')
+  @ApiOperation({ summary: '유저 회원가입 선호 비디오 조회', description: '특정 유저가 회원가입할때의 선택한 곡 목록을 가져옵니다.' })
+  @ApiCreatedResponse({ description: '유저 회원가입 선호 비디오 목록입니다.', type: GetUserSignUpFavoriteResponse })
   async getFavorite() {}
 
   @Post('/signup-favorite')
-  async createFavorite() {}
+  @ApiOperation({ summary: '유저 회원가입 선호 비디오 생성', description: '특정 유저가 회원가입시 선택한 곡 목록 정보를 생성합니다.' })
+  @ApiCreatedResponse({ description: '', type: PostUserSignUpFavoriteResponse })
+  async createFavorite(@Headers('Authorization') accessToken: string, @Body() postUserSignUpFavoriteRequest: PostUserSignUpFavoriteRequest) {}
 }
