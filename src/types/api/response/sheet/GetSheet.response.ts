@@ -5,6 +5,6 @@ import { Response } from '../response';
 export class GetSheetResponse extends Response {
   code: number;
   message: string;
-  @ApiProperty({ description: '특정 악보 정보 데이터 입니다.' })
-  data: Sheet;
+  @ApiProperty({ type: [Sheet], description: '특정 악보 정보 데이터 입니다.' })
+  data: [Sheet];
 }

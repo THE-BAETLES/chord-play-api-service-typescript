@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Video } from 'src/schemas/video.schema';
 import { Response } from '../response';
-import { Video } from 'aws-sdk/clients/rekognition';
 
 export class GetGradeVideoCollectionResponse extends Response {
-  @ApiProperty()
+  @ApiProperty({ type: [Video] })
   data: Video[];
 }
