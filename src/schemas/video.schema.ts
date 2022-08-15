@@ -43,6 +43,10 @@ export class Video {
   @Prop()
   @ApiProperty({ description: '비디오가 재생된 총 횟수를 기록합니다.' })
   play_count: number;
+
+  @Prop()
+  @ApiProperty({ description: '비디오가 생성된 시간입니다' })
+  created_at: Date;
 }
 
 export const VideoSchema = SchemaFactory.createForClass(Video);
